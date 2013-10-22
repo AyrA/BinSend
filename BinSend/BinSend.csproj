@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0EA7D2F1-30E6-4F58-9250-2645A4F94E8C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BinSend</RootNamespace>
+    <AssemblyName>BinSend</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CookComputing.XmlRpcV2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\CookComputing.XmlRpcV2.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ascii85.cs" />
+    <Compile Include="bitEnc.cs" />
+    <Compile Include="BitProxy.cs" />
+    <Compile Include="clsCrypt.cs" />
+    <Compile Include="clsQuickSettings.cs" />
+    <Compile Include="clsSentFile.cs" />
+    <Compile Include="clsTemplate.cs" />
+    <Compile Include="clsTemplates.cs" />
+    <Compile Include="clsThreadedSender.cs" />
+    <Compile Include="clsValidPart.cs" />
+    <Compile Include="frmAPI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAPI.Designer.cs">
+      <DependentUpon>frmAPI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBinSend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBinSend.Designer.cs">
+      <DependentUpon>frmBinSend.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPartCollector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPartCollector.Designer.cs">
+      <DependentUpon>frmPartCollector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPreview.Designer.cs">
+      <DependentUpon>frmPreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTemplateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTemplateEditor.Designer.cs">
+      <DependentUpon>frmTemplateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTemplates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTemplates.Designer.cs">
+      <DependentUpon>frmTemplates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="utfEnc.cs" />
+    <Compile Include="yEnc.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmAPI.resx">
+      <DependentUpon>frmAPI.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBinSend.resx">
+      <DependentUpon>frmBinSend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPartCollector.resx">
+      <DependentUpon>frmPartCollector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPreview.resx">
+      <DependentUpon>frmPreview.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTemplateEditor.resx">
+      <DependentUpon>frmTemplateEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTemplates.resx">
+      <DependentUpon>frmTemplates.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DLL\CookComputing.XmlRpcV2.dll" />
+    <Content Include="DLL\Newtonsoft.Json.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
