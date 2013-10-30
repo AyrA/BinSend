@@ -7,6 +7,6 @@
 *.sln.docstates
 
 # Build results
-[Dd]ebug/
+#[Dd]ebug/
 *.vshost.*
 *.pdb
