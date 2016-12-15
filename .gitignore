@@ -1,5 +1,6 @@
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
 [Oo]bj/
+[Dd]ebug/
 
 # User-specific files
 *.suo
@@ -7,6 +8,5 @@
 *.sln.docstates
 
 # Build results
-#[Dd]ebug/
 *.vshost.*
 *.pdb

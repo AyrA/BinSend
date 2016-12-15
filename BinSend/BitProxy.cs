@@ -6,13 +6,23 @@ using Newtonsoft.Json;
 
 namespace BinSend
 {
+    public struct API_CONST
+    {
+        public const int DEFAULT_ENCODING = 2;
+        public const int MAX_TTL = 2419200;
+        public const int DEFAULT_TTL = 345600;
+    }
+
     public interface BitAPI : IXmlRpcProxy
     {
         [XmlRpcMethod]
         string helloWorld(string a, string b);
 
         [XmlRpcMethod]
-        string sendMessage(string ToAddr, string FromAddr, string Base64subject, string Base64message);
+        string sendMessage(string ToAddr, string FromAddr, string Base64subject, string Base64message, int encodingType, int TTL);
+
+        [XmlRpcMethod]
+        string sendBroadcast(string FromAddr, string Base64subject, string Base64message, int encodingType, int TTL);
 
         [XmlRpcMethod]
         string getAllInboxMessages();
@@ -186,7 +196,7 @@ namespace BinSend
         /// </summary>
         public void Decode()
         {
-            label=JsonConverter.B64dec(label);
+            //label=JsonConverter.B64dec(label);
         }
     }
 

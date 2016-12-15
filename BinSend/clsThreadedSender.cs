@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 
 namespace BinSend
 {
-    public delegate void chunkSentHandler(int part,int maxParts,TimeSpan duration);
+    public delegate void chunkSentHandler(int part, int maxParts, TimeSpan duration);
     public delegate void taskFinishedHandler();
 
     public enum EncodingFormat
@@ -33,7 +33,7 @@ namespace BinSend
         {
             Data = data;
             SHA1Managed SM = new SHA1Managed();
-            SHA1=ToString(SM.ComputeHash(data));
+            SHA1 = ToString(SM.ComputeHash(data));
             SM.Clear();
         }
 
@@ -75,6 +75,7 @@ namespace BinSend
         private string ToAddress;
         private string Subject;
         private string TextTemplate;
+        private int TTL;
         private EncodingFormat EF;
         private string fName;
 
@@ -87,13 +88,14 @@ namespace BinSend
         /// <param name="Text">Text template: {0}=index {1}=NumberOfParts {2}=Base64part</param>
         /// <param name="data">byte data to send</param>
         /// <param name="chunkLength">Length of a chunk in bytes</param>
-        public ThreadedSender(string FileName,EncodingFormat ef ,string From,string To,string Subj,string Text,byte[] data,int chunkLength)
+        public ThreadedSender(string FileName, EncodingFormat ef, string From, string To, string Subj, string Text, byte[] data, int chunkLength, int TTL)
         {
             FromAddress = From;
             ToAddress = To;
             Subject = Subj;
             TextTemplate = Text;
             fName = FileName;
+            this.TTL = TTL;
             EF = ef;
 
             Parts = new List<Part>();
@@ -136,7 +138,7 @@ namespace BinSend
             Parts.Clear();
         }
 
-        private void ThreadedSender_chunkSent(int part, int maxParts,TimeSpan duration)
+        private void ThreadedSender_chunkSent(int part, int maxParts, TimeSpan duration)
         {
             t = null;
             if (part < maxParts)
@@ -170,17 +172,34 @@ namespace BinSend
             BA.Url = string.Format("http://{0}/", QuickSettings.Get("API-ADDR"));
             BA.Headers.Add("Authorization", "Basic " + JsonConverter.B64enc(string.Format("{0}:{1}", QuickSettings.Get("API-NAME"), QuickSettings.Get("API-PASS"))));
 
-            string encString=encode(Parts[index-1].Data,EF);
-            string ackData = BA.sendMessage(ToAddress, FromAddress, JsonConverter.B64enc(Subject), JsonConverter.B64enc(
-                string.Format(TextTemplate,
-                /*0*/fName,
-                /*1*/index,
-                /*2*/Parts.Count,
-                /*3*/EF.ToString(),
-                /*4*/encString.Length,
-                /*5*/HashList,
-                /*6*/encString)));
-            encString=null;
+            string encString = encode(Parts[index - 1].Data, EF);
+            string ackData = null;
+            if (!string.IsNullOrEmpty(ToAddress))
+            {
+                ackData = BA.sendMessage(ToAddress, FromAddress, JsonConverter.B64enc(Subject), JsonConverter.B64enc(
+                    string.Format(TextTemplate,
+                    /*0*/fName,
+                    /*1*/index,
+                    /*2*/Parts.Count,
+                    /*3*/EF.ToString(),
+                    /*4*/encString.Length,
+                    /*5*/HashList,
+                    /*6*/encString)), API_CONST.DEFAULT_ENCODING, TTL);
+                encString = null;
+            }
+            else
+            {
+                ackData = BA.sendBroadcast(FromAddress, JsonConverter.B64enc(Subject), JsonConverter.B64enc(
+                    string.Format(TextTemplate,
+                    /*0*/fName,
+                    /*1*/index,
+                    /*2*/Parts.Count,
+                    /*3*/EF.ToString(),
+                    /*4*/encString.Length,
+                    /*5*/HashList,
+                    /*6*/encString)), API_CONST.DEFAULT_ENCODING, TTL);
+                encString = null;
+            }
             string AMSG = BA.getStatus(ackData).ToLower().Trim();
             Console.Write("Waiting for POW...");
 
@@ -215,13 +234,13 @@ namespace BinSend
                 case EncodingFormat.Ascii85:
                     return new Ascii85().Encode(data);
                 case EncodingFormat.Base64:
-                    return splitLine(Convert.ToBase64String(data),78);
+                    return splitLine(Convert.ToBase64String(data), 78);
                 case EncodingFormat.Hex:
                     return Hex(data);
                 //case EncodingFormat.yEnc:
-                    //return Encoding.GetEncoding("IBM437").GetString(yEnc.yEnc.Encode(data));
+                //return Encoding.GetEncoding("IBM437").GetString(yEnc.yEnc.Encode(data));
                 //case EncodingFormat.BitEnc:
-                    //return bitEnc.encode(data);
+                //return bitEnc.encode(data);
                 case EncodingFormat.Raw:
                     return Encoding.UTF8.GetString(data);
             }
@@ -245,9 +264,9 @@ namespace BinSend
                 case EncodingFormat.Hex:
                     return Unhex(data);
                 //case EncodingFormat.yEnc:
-                    //return yEnc.yEnc.Decode(Encoding.GetEncoding("IBM437").GetBytes(data));
+                //return yEnc.yEnc.Decode(Encoding.GetEncoding("IBM437").GetBytes(data));
                 //case EncodingFormat.BitEnc:
-                    //return bitEnc.decode(data);
+                //return bitEnc.decode(data);
                 case EncodingFormat.Raw:
                     return Encoding.UTF8.GetBytes(data);
 
@@ -333,11 +352,11 @@ namespace BinSend
         /// <summary>
         /// Start sending the first part.
         /// </summary>
-        public void send()
+        public void send(int startPart)
         {
             if (t == null)
             {
-                sendPart(1);
+                sendPart(startPart);
             }
         }
     }

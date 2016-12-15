@@ -12,6 +12,8 @@ namespace BinSend
 {
     public partial class frmBinSend : Form
     {
+        private const string BROADCAST = "<BROADCAST>";
+
         ThreadedSender TS;
         BitAPI BA;
         int TimeToSend = 0;
@@ -30,20 +32,20 @@ namespace BinSend
                 }
                 else
                 {
-                    MessageBox.Show("Your API settings have been saved.\r\nIf you want to change them later, delete "+QuickSettings.FILE, "API settings OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Your API settings have been saved.\r\nIf you want to change them later, delete " + QuickSettings.FILE, "API settings OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             BA = (BitAPI)XmlRpcProxyGen.Create(typeof(BitAPI));
             BA.Url = string.Format("http://{0}/", QuickSettings.Get("API-ADDR"));
             BA.Headers.Add("Authorization", "Basic " + JsonConverter.B64enc(string.Format("{0}:{1}", QuickSettings.Get("API-NAME"), QuickSettings.Get("API-PASS"))));
-            
+
             TS = null;
 
             cbFormat.DataSource = Enum.GetValues(typeof(EncodingFormat));
             cbFormat.SelectedItem = EncodingFormat.Base64;
 
-            Identity[] myIDs=JsonConverter.getAddresses(BA.listAddresses2());
-            addrbookEntry[] Entries=JsonConverter.getAddrBook(BA.listAddressBookEntries());
+            Identity[] myIDs = JsonConverter.getAddresses(BA.listAddresses2());
+            addrbookEntry[] Entries = JsonConverter.getAddrBook(BA.listAddressBookEntries());
             string s = null;
 
             for (int i = 0; i < myIDs.Length; i++)
@@ -71,9 +73,11 @@ namespace BinSend
                 Environment.Exit(1);
                 return;
             }
+            cbTo.AutoCompleteCustomSource.Add(BROADCAST);
+            cbTo.Items.Add(BROADCAST);
             foreach (addrbookEntry E in Entries)
             {
-                cbTo.AutoCompleteCustomSource.Add(string.Format("{0}    {1}",E.label,E.address));
+                cbTo.AutoCompleteCustomSource.Add(string.Format("{0}    {1}", E.label, E.address));
                 cbTo.Items.Add(string.Format("{0}    {1}", E.label, E.address));
             }
             FT_TemplateSelected(init);
@@ -83,7 +87,7 @@ namespace BinSend
         {
             if (TS == null)
             {
-                if (cbTo.Text.Length > 0)
+                if (cbTo.Text.Length > 0 || cbTo.Text == BROADCAST)
                 {
                     if (OFD.ShowDialog() == DialogResult.OK)
                     {
@@ -93,14 +97,15 @@ namespace BinSend
                             OFD.SafeFileName,
                             (EncodingFormat)Enum.Parse(typeof(EncodingFormat), cbFormat.SelectedItem.ToString()),
                             cbFrom.SelectedItem.ToString().Split(' ')[cbFrom.SelectedItem.ToString().Split(' ').Length - 1],
-                            cbTo.Text,
+                            cbTo.Text == BROADCAST ? null : cbTo.Text,
                             tbSubject.Text,
                             tbText.Text,
                             File.ReadAllBytes(OFD.FileName),
-                            nudKB.Value == 0 ? 180 * 1000 * 1000 : (int)nudKB.Value * 1024);
+                            nudKB.Value == 0 ? 180 * 1000 * 1000 : (int)nudKB.Value * 1024,
+                            (int)nudTTL.Value);
                         TS.chunkSent += new chunkSentHandler(TS_chunkSent);
                         TS.taskFinished += new taskFinishedHandler(TS_taskFinished);
-                        TS.send();
+                        TS.send((int)nudStart.Value);
                         btnFile.Enabled = false;
                     }
                 }
@@ -147,9 +152,9 @@ namespace BinSend
                 TimeSpan TS = new TimeSpan(0, 0, TimeToSend / part * maxParts);
                 TimeSpan Left = new TimeSpan(0, 0, TimeToSend / part * (maxParts - part));
                 lblStatus.Text = string.Format("Sending {0}/{1}...   Estimated Total: {2:00}:{3:00}:{4:00}   Estimated Time left: {5:00} {6:00} {7:00}",
-                    part,maxParts,
-                    TS.Hours,TS.Minutes,TS.Seconds,
-                    Left.Hours,Left.Minutes,Left.Seconds);
+                    part, maxParts,
+                    TS.Hours, TS.Minutes, TS.Seconds,
+                    Left.Hours, Left.Minutes, Left.Seconds);
             });
         }
 
@@ -212,12 +217,12 @@ Sends content 'as is'. If the content is not UTF-8 conform, information is lost.
 Ideal to transmit precoded content.
 
 Unknown - Do not use.
-Used for incoming content with an encoding, not known to us.","Encoding",MessageBoxButtons.OK,MessageBoxIcon.Information);
+Used for incoming content with an encoding, not known to us.", "Encoding", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void cbTo_Leave(object sender, EventArgs e)
         {
-            cbTo.Text = cbTo.Text.Substring(cbTo.Text.LastIndexOf(" ")+1);
+            cbTo.Text = cbTo.Text.Substring(cbTo.Text.LastIndexOf(" ") + 1);
             if (cbTo.Text.Contains("BM-"))
             {
                 cbTo.Text = cbTo.Text.Substring(cbTo.Text.IndexOf("BM-"));

@@ -14,6 +14,7 @@ namespace BinSend
 
 ==================
 This is a chunked file transfer over bitmessage.
+You can reassemble the parts using BinSend: https://github.com/AyrA/BinSend
 
 #BEGIN#
 ;Define if all parts must come from the same address.
@@ -22,7 +23,7 @@ SameOrigin=Yes
 Name={0}
 ;This is CurrentPart;AllParts
 Part={1};{2}
-;This is the encoding format (base64,yEnc, etc)
+;This is the encoding format (base64, Ascii85, etc)
 Format={3}
 ;Length of the encoded Content (not the decoded)
 Length={4}
@@ -30,6 +31,24 @@ Length={4}
 HashList={5}
 ;Finally the encoded content.
 Content={6}";
+        /// <summary>
+        /// The default Template (short form)
+        /// </summary>
+        public const string DEFAULT_SHORT = @"ENTER DESCRIPTION HERE
+
+==================
+This is a chunked file transfer over bitmessage.
+You can reassemble the parts using BinSend: https://github.com/AyrA/BinSend
+
+#BEGIN#
+SameOrigin=Yes
+Name={0}
+Part={1};{2}
+Format={3}
+Length={4}
+HashList={5}
+Content={6}";
+
         /// <summary>
         /// Raw data. No header or other stuff
         /// </summary>
@@ -84,6 +103,14 @@ Has been tested with firefox, chrome and opera.<br />
             T.ProposedFormat = EncodingFormat.Base64;
             T.Subject = "Chunked Transfer";
             T.Text = DEFAULT;
+            T.Save();
+
+            T = new Template();
+            T.ChunkSize = 100;
+            T.Name = "Default (short)";
+            T.ProposedFormat = EncodingFormat.Base64;
+            T.Subject = "Chunked Transfer";
+            T.Text = DEFAULT_SHORT;
             T.Save();
 
             T = new Template();
