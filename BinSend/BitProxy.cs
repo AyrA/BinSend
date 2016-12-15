@@ -52,7 +52,7 @@ namespace BinSend
         string trashSentMessageByAckData(string AckData);
 
         [XmlRpcMethod]
-        string listAddresses2();
+        string listAddresses();
     }
 
     public static class JsonConverter

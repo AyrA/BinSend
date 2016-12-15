@@ -44,7 +44,7 @@ namespace BinSend
             cbFormat.DataSource = Enum.GetValues(typeof(EncodingFormat));
             cbFormat.SelectedItem = EncodingFormat.Base64;
 
-            Identity[] myIDs = JsonConverter.getAddresses(BA.listAddresses2());
+            Identity[] myIDs = JsonConverter.getAddresses(BA.listAddresses());
             addrbookEntry[] Entries = JsonConverter.getAddrBook(BA.listAddressBookEntries());
             string s = null;
 
