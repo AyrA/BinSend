@@ -47,8 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ascii85.cs" />
-    <Compile Include="bitEnc.cs" />
+    <Compile Include="Encoders\Ascii85.cs" />
+    <Compile Include="Encoders\bitEnc.cs" />
     <Compile Include="BitProxy.cs" />
     <Compile Include="clsCrypt.cs" />
     <Compile Include="clsQuickSettings.cs" />
@@ -95,8 +95,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="utfEnc.cs" />
-    <Compile Include="yEnc.cs" />
+    <Compile Include="Encoders\utfEnc.cs" />
+    <Compile Include="Encoders\yEnc.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmAPI.resx">
