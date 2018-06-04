@@ -43,9 +43,9 @@
             this.cbFrom = new System.Windows.Forms.ComboBox();
             this.cbTo = new System.Windows.Forms.ComboBox();
             this.nudStart = new System.Windows.Forms.NumericUpDown();
+            this.nudTTL = new System.Windows.Forms.NumericUpDown();
             this.btnTemplate = new System.Windows.Forms.Button();
             this.btnEncoding = new System.Windows.Forms.Button();
-            this.nudTTL = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.nudKB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTTL)).BeginInit();
@@ -215,6 +215,30 @@
             0,
             0});
             // 
+            // nudTTL
+            // 
+            this.nudTTL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.nudTTL.Location = new System.Drawing.Point(343, 494);
+            this.nudTTL.Maximum = new decimal(new int[] {
+            672,
+            0,
+            0,
+            0});
+            this.nudTTL.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudTTL.Name = "nudTTL";
+            this.nudTTL.Size = new System.Drawing.Size(57, 20);
+            this.nudTTL.TabIndex = 11;
+            this.TT.SetToolTip(this.nudTTL, "Time to live (in Hours) for messages.\r\nShorter causes faster sending.");
+            this.nudTTL.Value = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            // 
             // btnTemplate
             // 
             this.btnTemplate.Location = new System.Drawing.Point(12, 90);
@@ -235,25 +259,6 @@
             this.btnEncoding.Text = "?";
             this.btnEncoding.UseVisualStyleBackColor = true;
             this.btnEncoding.Click += new System.EventHandler(this.btnEncoding_Click);
-            // 
-            // nudTTL
-            // 
-            this.nudTTL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudTTL.Location = new System.Drawing.Point(343, 494);
-            this.nudTTL.Maximum = new decimal(new int[] {
-            28,
-            0,
-            0,
-            0});
-            this.nudTTL.Name = "nudTTL";
-            this.nudTTL.Size = new System.Drawing.Size(57, 20);
-            this.nudTTL.TabIndex = 11;
-            this.TT.SetToolTip(this.nudTTL, "Time to live (in Days) for messages.\r\nShorter causes faster sending.");
-            this.nudTTL.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // frmBinSend
             // 

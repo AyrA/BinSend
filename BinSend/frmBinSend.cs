@@ -102,7 +102,7 @@ namespace BinSend
                             tbText.Text,
                             File.ReadAllBytes(OFD.FileName),
                             nudKB.Value == 0 ? 180 * 1000 * 1000 : (int)nudKB.Value * 1024,
-                            (int)nudTTL.Value);
+                            (int)nudTTL.Value * 3600);
                         TS.chunkSent += new chunkSentHandler(TS_chunkSent);
                         TS.taskFinished += new taskFinishedHandler(TS_taskFinished);
                         TS.send((int)nudStart.Value);
