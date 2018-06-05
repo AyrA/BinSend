@@ -164,6 +164,10 @@ namespace BinSend
         connectedAndReceivingIncomingConnections
     }
 
+    /// <summary>
+    /// Bitmessage XML RPC interface
+    /// </summary>
+    /// <remarks>Represents Version 6.3.2</remarks>
     public interface BitmessageRPC : IXmlRpcProxy
     {
         /// <summary>
