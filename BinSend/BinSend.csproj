@@ -55,6 +55,12 @@
   <ItemGroup>
     <Compile Include="BitmessageRPC.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="frmApiConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmApiConfig.Designer.cs">
+      <DependentUpon>frmApiConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools.cs" />
+    <EmbeddedResource Include="frmApiConfig.resx">
+      <DependentUpon>frmApiConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>

@@ -40,13 +40,52 @@ namespace BinSend
 
             if (C.Valid())
             {
-                Application.Run(new frmMain());
+                try
+                {
+                    var Status = Tools.GetRPC(C.ApiSettings).clientStatus().FromJson<BitmessageClientStatus>();
+                    if (!string.IsNullOrEmpty(Status.softwareName))
+                    {
+                        Application.Run(new frmMain(C));
+                    }
+                    else if (MessageBox.Show("API returned unexpected data. Reconfigure now? Selecting ''No'' will exit", "API Error", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        Configure();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (MessageBox.Show($@"Unable to make API request.
+Make sure that bitmessage is running.
+Message: {ex.Message}
+
+Edit Configuratio now? Selecting ''No'' will exit", "API Error", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.Yes)
+                    {
+                        Configure();
+                    }
+                }
             }
             else
             {
-                C = Config.GetDefaults();
-                MessageBox.Show("Invalid Configuration. Please set your API values", "Invalid API settings", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Configure();
             }
+        }
+
+        /// <summary>
+        /// Configures the API
+        /// </summary>
+        private static void Configure()
+        {
+            var C = Config.GetDefaults();
+            MessageBox.Show("Invalid Configuration. Please set your API values", "Invalid API settings", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            var f = new frmApiConfig(C);
+            Application.Run(f);
+            if (f.DialogResult == DialogResult.OK)
+            {
+                C.ApiSettings = f.ApiConfiguration;
+                C.Save(AppPath);
+                Application.Restart();
+            }
+
         }
     }
 }

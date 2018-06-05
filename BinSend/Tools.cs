@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CookComputing.XmlRpc;
+using Newtonsoft.Json;
 using System;
 using System.Text;
 
@@ -13,6 +14,19 @@ namespace BinSend
         /// Value designating to use all bytes
         /// </summary>
         public const int DATA_EVERYTHING = -1;
+
+        /// <summary>
+        /// Gets the Bitmessage RPC component with the given Configuration vbalues
+        /// </summary>
+        /// <param name="C"></param>
+        /// <returns></returns>
+        public static BitmessageRPC GetRPC(ApiConfig C)
+        {
+            var RPC = (BitmessageRPC)XmlRpcProxyGen.Create(typeof(BitmessageRPC));
+            RPC.Url = string.Format("http://{0}:{1}/", C.IpOrHostname, C.Port);
+            RPC.Headers.Add("Authorization", "Basic " + string.Format("{0}:{1}", C.Username, C.Password).UTF().B64());
+            return RPC;
+        }
 
         /// <summary>
         /// Converts UTF8 Text to bytes
@@ -79,8 +93,9 @@ namespace BinSend
             {
                 return JsonConvert.DeserializeObject<T>(S);
             }
-            catch
+            catch(Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"JSON DECODE ERROR: {ex.Message}\r\nJSON DECODE ERROR: {S}");
                 return Default;
             }
         }

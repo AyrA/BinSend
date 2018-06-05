@@ -433,7 +433,7 @@ namespace BinSend
         /// </summary>
         /// <returns>BitmessageConnectionStatus</returns>
         [XmlRpcMethod]
-        string getStatus();
+        string clientStatus();
 
         #region Documented but Unimplemented
 

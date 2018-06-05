@@ -5,9 +5,20 @@ namespace BinSend
 {
     public partial class frmMain : Form
     {
-        public frmMain()
+        private BitmessageRPC RPC;
+        private Config C;
+
+        public frmMain(Config Configuration)
         {
             InitializeComponent();
+            C = Configuration;
+            RPC = Tools.GetRPC(C.ApiSettings);
+            LoadAddresses();
+        }
+
+        private void LoadAddresses()
+        {
+            throw new NotImplementedException();
         }
 
         private void btnSelectFile_Click(object sender, EventArgs e)
