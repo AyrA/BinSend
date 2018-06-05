@@ -53,8 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ascii85.cs" />
     <Compile Include="BitmessageRPC.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Fragment.cs" />
     <Compile Include="frmApiConfig.cs">
       <SubType>Form</SubType>
     </Compile>

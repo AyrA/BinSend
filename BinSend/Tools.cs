@@ -1,6 +1,9 @@
 ﻿using CookComputing.XmlRpc;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -11,6 +14,9 @@ namespace BinSend
     /// </summary>
     public static class Tools
     {
+        [DllImport("kernel32.dll")]
+        private static extern void OutputDebugStringW([MarshalAs(UnmanagedType.LPWStr)]string Message);
+
         /// <summary>
         /// Value designating to use all bytes
         /// </summary>
@@ -19,6 +25,15 @@ namespace BinSend
         /// Regular expression for basic BM Addr format detection
         /// </summary>
         public const string BM_REGEX = @"(BM-[\w]{30,35})";
+        public const string FORMAT_HEX = "X2";
+
+        public static void Log(string Message)
+        {
+#if DEBUG
+            OutputDebugStringW(Message);
+            System.Diagnostics.Debug.WriteLine(Message);
+#endif
+        }
 
         /// <summary>
         /// Tries to extract the first Bitmessage address found in a string
@@ -34,6 +49,90 @@ namespace BinSend
                 {
                     return R.Match(Input).Groups[1].Value;
                 }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Computes the SHA1 hash of this byte array
+        /// </summary>
+        /// <param name="Data">Binary</param>
+        /// <param name="Start">Start</param>
+        /// <param name="Count">Number of bytes to parse</param>
+        /// <returns>SHA1</returns>
+        public static string SHA1(this byte[] Data, int Start = 0, int Count = DATA_EVERYTHING)
+        {
+            if (Data == null)
+            {
+                return null;
+            }
+            if (Count == DATA_EVERYTHING)
+            {
+                Count = Data.Length - Start;
+            }
+            using (var Hasher = new SHA1Managed())
+            {
+                return Hasher.ComputeHash(Data, Start, Count).HEX();
+            }
+        }
+
+        /// <summary>
+        /// Computes the SHA1 hash of this string
+        /// </summary>
+        /// <param name="Data">String</param>
+        /// <returns>SHA1</returns>
+        public static string SHA1(this string Data)
+        {
+            return Data.UTF().SHA1();
+        }
+
+        public static byte[] A85(this string Data)
+        {
+            var A = new Ascii85();
+            return A.Decode(Data);
+        }
+
+        public static string A85(this byte[] Data, int Start = 0, int Count = DATA_EVERYTHING)
+        {
+            if (Count == DATA_EVERYTHING)
+            {
+                Count = Data.Length - Start;
+            }
+            var A = new Ascii85();
+            return A.Encode(Data.Skip(Start).Take(Count).ToArray());
+        }
+
+        /// <summary>
+        /// Converts this byte array to hex string
+        /// </summary>
+        /// <param name="Data">Binary</param>
+        /// <param name="Start">Start</param>
+        /// <param name="Count">Number of bytes to parse</param>
+        /// <returns>Hex string</returns>
+        public static string HEX(this byte[] Data, int Start = 0, int Count = DATA_EVERYTHING)
+        {
+            if (Count == DATA_EVERYTHING)
+            {
+                Count = Data.Length - Start;
+            }
+            return string.Concat(Data.Skip(Start).Take(Count).Select(m => m.ToString(FORMAT_HEX)));
+        }
+
+        /// <summary>
+        /// Converts this hexadecimal string into a byte array
+        /// </summary>
+        /// <param name="Data">Hexadecimal string</param>
+        /// <returns>Byte array</returns>
+        public static byte[] HEX(this string Data)
+        {
+            if (Data != null && Data.Length % 2 != 1)
+            {
+                byte[] Ret = new byte[Data.Length / 2];
+                for (var i = 0; i < Ret.Length; i++)
+                {
+                    Ret[i] = byte.Parse(Data.Substring(i * 2, 2), System.Globalization.NumberStyles.HexNumber);
+                }
+                return Ret;
             }
             return null;
         }
@@ -137,7 +236,7 @@ namespace BinSend
             }
             catch(Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"JSON DECODE ERROR: {ex.Message}\r\nJSON DECODE ERROR: {S}");
+                Log($"JSON DECODE ERROR: {ex.Message}\r\nJSON DECODE ERROR: {S}");
                 return Default;
             }
         }
