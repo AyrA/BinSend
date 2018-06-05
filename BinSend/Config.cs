@@ -5,6 +5,14 @@ using System.Net;
 
 namespace BinSend
 {
+    public enum EncodingType : int
+    {
+        Raw = 0,
+        Base64 = 1,
+        Ascii85 = 2,
+        Hex = 3
+    }
+
     public struct Config
     {
         public const string CONF_NAME = "config.json";
@@ -139,6 +147,7 @@ Works in all major browsers.<br />
 
         public string Name;
         public string Content;
+        public EncodingType Encoding;
 
         public bool Valid()
         {
@@ -146,21 +155,22 @@ Works in all major browsers.<br />
                 !string.IsNullOrEmpty(Content);
         }
 
-        public Template(string TemplateName, string TemplateContent)
+        public Template(string TemplateName, string TemplateContent, EncodingType TemplateEncoding)
         {
             Name = TemplateName;
             Content = TemplateContent;
+            Encoding = TemplateEncoding;
         }
 
         public static Template[] GetDefaults()
         {
             return new Template[]
             {
-                new Template("Default", DEFAULT),
-                new Template("Default (Short)", DEFAULT_SHORT),
-                new Template("Raw", RAW),
-                new Template("Video (ogg)", VIDEO),
-                new Template("Audio (mp3)", AUDIO)
+                new Template("Default", DEFAULT, EncodingType.Base64),
+                new Template("Default (Short)", DEFAULT_SHORT, EncodingType.Base64),
+                new Template("Raw", RAW, EncodingType.Raw),
+                new Template("Video (ogg)", VIDEO, EncodingType.Base64),
+                new Template("Audio (mp3)", AUDIO, EncodingType.Base64)
             };
         }
     }

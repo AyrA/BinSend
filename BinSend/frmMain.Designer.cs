@@ -87,7 +87,7 @@
             // 
             this.tbToAddr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbToAddr.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.tbToAddr.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbToAddr.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbToAddr.Location = new System.Drawing.Point(61, 33);
             this.tbToAddr.Name = "tbToAddr";
@@ -190,7 +190,7 @@
             this.nudTTL.Size = new System.Drawing.Size(69, 20);
             this.nudTTL.TabIndex = 14;
             this.nudTTL.Value = new decimal(new int[] {
-            50,
+            24,
             0,
             0,
             0});
@@ -280,7 +280,7 @@
             this.btnTemplate.Name = "btnTemplate";
             this.btnTemplate.Size = new System.Drawing.Size(213, 23);
             this.btnTemplate.TabIndex = 15;
-            this.btnTemplate.Text = "Select and Manage Template";
+            this.btnTemplate.Text = "Template";
             this.btnTemplate.UseVisualStyleBackColor = true;
             // 
             // OFD

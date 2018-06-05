@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BinSend
@@ -18,25 +19,35 @@ namespace BinSend
 
         private void LoadAddresses()
         {
-            var selected = cbFromAddr.SelectedItem == null ? null : cbFromAddr.SelectedItem.ToString();
+            var selected = cbFromAddr.SelectedItem == null ? "" : Tools.GetBmAddr(cbFromAddr.SelectedItem.ToString());
 
             tbToAddr.AutoCompleteCustomSource.Clear();
             cbFromAddr.Items.Clear();
 
-            var Addr = RPC.listAddressBookEntries().FromJson<BitmessageAddrInfoContainer>();
-            if (Addr.addresses != null)
+            var Contacts = RPC.listAddressBookEntries().FromJson<BitmessageAddrInfoContainer>();
+            if (Contacts.addresses != null)
             {
-                foreach (var A in Addr.addresses)
+                foreach (var A in Contacts.addresses)
                 {
-                    tbToAddr.AutoCompleteCustomSource.Add($"{A.label.B64().UTF()} <{A.address}>");
+                    tbToAddr.AutoCompleteCustomSource.Add($"{A.address} [{A.label.B64().UTF()}]");
                 }
             }
-            Addr = RPC.listAddresses().FromJson<BitmessageAddrInfoContainer>();
-            if (Addr.addresses != null)
+            var Self = RPC.listAddresses().FromJson<BitmessageAddrInfoContainer>();
+            if (Self.addresses != null)
             {
-                foreach (var A in Addr.addresses)
+                foreach (var A in Self.addresses)
                 {
+                    //Add own addresses to recipient list too
+                    if (!Contacts.addresses.Any(m => m.address == A.address))
+                    {
+                        tbToAddr.AutoCompleteCustomSource.Add($"{A.address} [{A.label}]");
+                    }
                     cbFromAddr.Items.Add($"{A.label} <{A.address}>");
+                    //Reselect our address
+                    if (A.address == selected)
+                    {
+                        cbFromAddr.SelectedIndex = cbFromAddr.Items.Count - 1;
+                    }
                 }
             }
         }

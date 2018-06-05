@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace BinSend
 {
@@ -14,6 +15,28 @@ namespace BinSend
         /// Value designating to use all bytes
         /// </summary>
         public const int DATA_EVERYTHING = -1;
+        /// <summary>
+        /// Regular expression for basic BM Addr format detection
+        /// </summary>
+        public const string BM_REGEX = @"(BM-[\w]{30,35})";
+
+        /// <summary>
+        /// Tries to extract the first Bitmessage address found in a string
+        /// </summary>
+        /// <param name="Input">String with possible BM address in it</param>
+        /// <returns>BM Addr (or null if not found)</returns>
+        public static string GetBmAddr(string Input)
+        {
+            if (!string.IsNullOrEmpty(Input))
+            {
+                var R = new Regex(BM_REGEX);
+                if (R.IsMatch(Input))
+                {
+                    return R.Match(Input).Groups[1].Value;
+                }
+            }
+            return null;
+        }
 
         /// <summary>
         /// Gets the Bitmessage RPC component with the given Configuration vbalues
