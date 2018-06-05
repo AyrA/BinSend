@@ -1,10 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace BinSend
 {
     public struct Config
     {
+        public const string CONF_NAME = "config.json";
+
         public ApiConfig ApiSettings;
         public Template[] Templates;
 
@@ -13,6 +17,26 @@ namespace BinSend
             return Templates != null &&
                 Templates.All(m => m.Valid()) &&
                 ApiSettings.Valid();
+        }
+
+        public static Config Load(string Dir)
+        {
+            if (string.IsNullOrEmpty(Dir))
+            {
+                Dir = Environment.CurrentDirectory;
+            }
+
+            var P = Path.Combine(Dir, CONF_NAME);
+
+            try
+            {
+                return File.ReadAllText(P).FromJson<Config>();
+            }
+            catch
+            {
+
+            }
+            return default(Config);
         }
     }
 
