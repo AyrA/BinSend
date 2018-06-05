@@ -252,6 +252,7 @@
             this.btnManageAdd.TabIndex = 2;
             this.btnManageAdd.Text = "...";
             this.btnManageAdd.UseVisualStyleBackColor = true;
+            this.btnManageAdd.Click += new System.EventHandler(this.btnManageAdd_Click);
             // 
             // btnAddressBook
             // 

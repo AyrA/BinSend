@@ -92,5 +92,14 @@ namespace BinSend
             tbBody.Text = Selected.Content;
 
         }
+
+        private void btnManageAdd_Click(object sender, EventArgs e)
+        {
+            using (var F = new frmAddr(C.ApiSettings))
+            {
+                F.ShowDialog();
+                LoadAddresses();
+            }
+        }
     }
 }

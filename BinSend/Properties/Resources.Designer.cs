@@ -59,5 +59,27 @@ namespace BinSend.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Templates
+        ///=========
+        ///
+        ///Use this Window to manage your Templates.
+        ///
+        ///Editing Templates
+        ///=================
+        ///In the left column you see a list of all templates.
+        ///To edit the content and encoding, just select the template in question.
+        ///Below the box are buttons to add, delete and reorder your templates.
+        ///You can Edit the template with the text box on the right side.
+        ///The encoding can be chosen from the drop down element on the bottom.
+        ///
+        ///The changes are remembered immediately and you can freely switch between  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string HELP_Template {
+            get {
+                return ResourceManager.GetString("HELP_Template", resourceCulture);
+            }
+        }
     }
 }

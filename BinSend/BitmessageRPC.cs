@@ -46,6 +46,13 @@ namespace BinSend
     {
         public BitmessageAddrInfo[] addresses;
     }
+    /// <summary>
+    /// Bitmessage address lists
+    /// </summary>
+    public struct BitmessageAddrListContainer
+    {
+        public string[] addresses;
+    }
 
     /// <summary>
     /// Bitmessage Address information

@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace BinSend
 {
@@ -86,12 +87,24 @@ namespace BinSend
             return Data.UTF().SHA1();
         }
 
+        /// <summary>
+        /// Decodes this Ascii85 Encoded string into raw bytes
+        /// </summary>
+        /// <param name="Data">A85 String</param>
+        /// <returns>Bytes</returns>
         public static byte[] A85(this string Data)
         {
             var A = new Ascii85();
             return A.Decode(Data);
         }
 
+        /// <summary>
+        /// Encodes this byte array into an A85 string
+        /// </summary>
+        /// <param name="Data">Binary</param>
+        /// <param name="Start">Start</param>
+        /// <param name="Count">Number of bytes to parse</param>
+        /// <returns>Byte array</returns>
         public static string A85(this byte[] Data, int Start = 0, int Count = DATA_EVERYTHING)
         {
             if (Count == DATA_EVERYTHING)
@@ -135,6 +148,24 @@ namespace BinSend
                 return Ret;
             }
             return null;
+        }
+
+        public static void ShowHelp(string Text)
+        {
+            var F = Application.OpenForms.OfType<frmHelp>().FirstOrDefault();
+            if (F == null)
+            {
+                F = new frmHelp();
+            }
+            F.Show();
+            F.BringToFront();
+            F.Focus();
+            F.SetHelp(Text);
+        }
+
+        public static void CloseHelp()
+        {
+            ShowHelp(null);
         }
 
         /// <summary>

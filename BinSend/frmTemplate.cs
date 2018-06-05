@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BinSend.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -161,6 +162,16 @@ namespace BinSend
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            Tools.ShowHelp(Resources.HELP_Template);
+        }
+
+        private void frmTemplate_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Tools.CloseHelp();
         }
     }
 }

@@ -148,14 +148,13 @@
             // btnHelp
             // 
             this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnHelp.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnHelp.Location = new System.Drawing.Point(335, 327);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(75, 23);
             this.btnHelp.TabIndex = 12;
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
-            this.btnHelp.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // frmTemplate
             // 
@@ -176,6 +175,7 @@
             this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "frmTemplate";
             this.Text = "Templates";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmTemplate_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
