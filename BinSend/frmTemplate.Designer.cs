@@ -47,6 +47,7 @@
             this.lbTemplate.Name = "lbTemplate";
             this.lbTemplate.Size = new System.Drawing.Size(158, 303);
             this.lbTemplate.TabIndex = 0;
+            this.lbTemplate.SelectedIndexChanged += new System.EventHandler(this.lbTemplate_SelectedIndexChanged);
             // 
             // tbBody
             // 
@@ -60,6 +61,7 @@
             this.tbBody.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbBody.Size = new System.Drawing.Size(396, 304);
             this.tbBody.TabIndex = 10;
+            this.tbBody.TextChanged += new System.EventHandler(this.tbBody_TextChanged);
             // 
             // btnAdd
             // 

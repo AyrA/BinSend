@@ -16,7 +16,6 @@ namespace BinSend
         public Template[] Templates;
         private List<Template> WorkingTemplates;
 
-
         public frmTemplate(Template[] Templates)
         {
             SelectedIndex = 0;
@@ -33,6 +32,7 @@ namespace BinSend
             {
                 cbEncoding.SelectedIndex = Math.Max(Math.Min(Select, cbEncoding.Items.Count - 1), 0);
             }
+            SelectedIndex = Select;
         }
 
         private void MoveUp()
@@ -94,6 +94,28 @@ namespace BinSend
                 });
             }
             SetTemplateList(WorkingTemplates.Count - 1);
+        }
+
+        private void lbTemplate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var Sel = lbTemplate.SelectedIndex;
+            if (Sel >= 0)
+            {
+                tbBody.Text = WorkingTemplates[Sel].Content;
+                cbEncoding.SelectedIndex = (int)WorkingTemplates[Sel].Encoding;
+            }
+        }
+
+        private void tbBody_TextChanged(object sender, EventArgs e)
+        {
+            var Sel = cbEncoding.SelectedIndex;
+            if (Sel > -1)
+            {
+                var T = WorkingTemplates[Sel];
+                T.Content = tbBody.Text;
+                WorkingTemplates[Sel] = T;
+            }
+
         }
     }
 }
