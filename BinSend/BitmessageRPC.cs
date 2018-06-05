@@ -40,6 +40,14 @@ namespace BinSend
     }
 
     /// <summary>
+    /// Bitmessage address lists
+    /// </summary>
+    public struct BitmessageAddrInfoContainer
+    {
+        public BitmessageAddrInfo[] addresses;
+    }
+
+    /// <summary>
     /// Bitmessage Address information
     /// </summary>
     public struct BitmessageAddrInfo
@@ -200,7 +208,7 @@ namespace BinSend
         /// </summary>
         /// <returns>JSON(BitmessageAddrInfo[])</returns>
         [XmlRpcMethod]
-        string listAddresses2();
+        string listAddresses();
 
         /// <summary>
         /// Creates a random address
@@ -358,7 +366,7 @@ namespace BinSend
         /// <summary>
         /// Gets all entries from the address book
         /// </summary>
-        /// <returns>JSON(BitmessageSubscription[]) (ignores enabled flag)</returns>
+        /// <returns>JSON(BitmessageAddrInfo[]) (ignores enabled flag)</returns>
         [XmlRpcMethod]
         string listAddressBookEntries();
 

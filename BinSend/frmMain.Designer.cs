@@ -87,6 +87,8 @@
             // 
             this.tbToAddr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbToAddr.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.tbToAddr.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbToAddr.Location = new System.Drawing.Point(61, 33);
             this.tbToAddr.Name = "tbToAddr";
             this.tbToAddr.Size = new System.Drawing.Size(458, 20);

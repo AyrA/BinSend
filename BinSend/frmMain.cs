@@ -18,7 +18,27 @@ namespace BinSend
 
         private void LoadAddresses()
         {
-            throw new NotImplementedException();
+            var selected = cbFromAddr.SelectedItem == null ? null : cbFromAddr.SelectedItem.ToString();
+
+            tbToAddr.AutoCompleteCustomSource.Clear();
+            cbFromAddr.Items.Clear();
+
+            var Addr = RPC.listAddressBookEntries().FromJson<BitmessageAddrInfoContainer>();
+            if (Addr.addresses != null)
+            {
+                foreach (var A in Addr.addresses)
+                {
+                    tbToAddr.AutoCompleteCustomSource.Add($"{A.label.B64().UTF()} <{A.address}>");
+                }
+            }
+            Addr = RPC.listAddresses().FromJson<BitmessageAddrInfoContainer>();
+            if (Addr.addresses != null)
+            {
+                foreach (var A in Addr.addresses)
+                {
+                    cbFromAddr.Items.Add($"{A.label} <{A.address}>");
+                }
+            }
         }
 
         private void btnSelectFile_Click(object sender, EventArgs e)
