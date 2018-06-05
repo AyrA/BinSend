@@ -121,6 +121,7 @@ namespace BinSend
             var Sel = lbTemplate.SelectedIndex;
             if (Sel >= 0)
             {
+                SelectedIndex = Sel;
                 tbBody.Text = WorkingTemplates[Sel].Content;
                 cbEncoding.SelectedItem = WorkingTemplates[Sel].Encoding;
             }
@@ -155,6 +156,11 @@ namespace BinSend
                 T.Encoding = (EncodingType)cbEncoding.SelectedItem;
                 WorkingTemplates[SelT] = T;
             }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

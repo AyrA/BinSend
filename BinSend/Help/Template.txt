@@ -1,0 +1,88 @@
+﻿Templates
+=========
+
+Use this Window to manage your Templates.
+
+Editing Templates
+=================
+In the left column you see a list of all templates.
+To edit the content and encoding, just select the template in question.
+Below the box are buttons to add, delete and reorder your templates.
+You can Edit the template with the text box on the right side.
+The encoding can be chosen from the drop down element on the bottom.
+
+The changes are remembered immediately and you can freely switch between multiple templates when editing.
+To use the changed template(s) you have to click "Save".
+Simply closing the window with the [X] or "Close" button will discard all changes.
+
+Reordering
+==========
+The first template in the list is loaded by default.
+You can reorder the templates to change that.
+
+Defaults
+========
+To restore the default templates, simply delete all templates and click "Save"
+
+Placeholders
+============
+You can put placeholders into the template.
+Placeholders are numbers inside curly braces.
+You don't need to use all numbers and can use numbers multiple times.
+The numbers are as follows:
+
+0: File name
+1: Current part number
+2: Total number of parts
+3: Encoding
+4: Length of encoded content
+5: Hash List
+6: Content
+
+BINSEND Format
+==============
+
+The BINSEND format can be used to automatically decode chunks into complete files.
+To use, put this content into the message: #BEGIN#{BINSEND:CHUNK}#END#
+
+The #END# marker is optional if no content follows the binsend chunk.
+Any number of whitespace is allowed between the chunk and the markers.
+
+The format is a flat JSON with this structure:
+
+{
+"SameOrigin":bool,
+"Name":string
+"Part":Int32,
+"List":[string,...],
+"Encoding":Int32,
+"Content":string
+}
+
+Explanation of fields:
+
+SameOrigin:
+This indicates if all parts must come from the same address as the first part.
+You usually want this enabled unless you send parts from multiple clients with different addresses.
+
+Name:
+This is the file name
+
+Part:
+This is the number of the part (starting from 1)
+
+List:
+This is a list of sha1 hashes. It's only needed in the first part and ignored if present in others.
+
+Encoding:
+This is an integer specifying the encoding. Supported by default are:
+Raw=0
+Base64=1
+Ascii85=2
+Hex=3
+
+Negative numbers are reserved for custom encodings
+
+Content:
+
+This is the content, encoded using the specified Encoding

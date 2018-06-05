@@ -36,6 +36,8 @@
             this.btnDown = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.cbEncoding = new System.Windows.Forms.ComboBox();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnHelp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbTemplate
@@ -66,6 +68,7 @@
             // btnAdd
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAdd.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnAdd.Location = new System.Drawing.Point(12, 327);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(36, 23);
@@ -113,8 +116,8 @@
             this.btnSave.Location = new System.Drawing.Point(497, 327);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 12;
-            this.btnSave.Text = "Save";
+            this.btnSave.TabIndex = 14;
+            this.btnSave.Text = "&Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -126,16 +129,43 @@
             this.cbEncoding.FormattingEnabled = true;
             this.cbEncoding.Location = new System.Drawing.Point(176, 328);
             this.cbEncoding.Name = "cbEncoding";
-            this.cbEncoding.Size = new System.Drawing.Size(315, 21);
+            this.cbEncoding.Size = new System.Drawing.Size(153, 21);
             this.cbEncoding.TabIndex = 13;
             this.cbEncoding.SelectedIndexChanged += new System.EventHandler(this.cbEncoding_SelectedIndexChanged);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(416, 327);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 13;
+            this.btnClose.Text = "&Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHelp.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnHelp.Location = new System.Drawing.Point(335, 327);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(75, 23);
+            this.btnHelp.TabIndex = 12;
+            this.btnHelp.Text = "&Help";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // frmTemplate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(584, 362);
             this.Controls.Add(this.cbEncoding);
+            this.Controls.Add(this.btnHelp);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDown);
             this.Controls.Add(this.btnUp);
@@ -161,5 +191,7 @@
         private System.Windows.Forms.Button btnDown;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ComboBox cbEncoding;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnHelp;
     }
 }

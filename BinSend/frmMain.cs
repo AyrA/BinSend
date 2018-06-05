@@ -16,6 +16,12 @@ namespace BinSend
             C = Configuration;
             RPC = Tools.GetRPC(C.ApiSettings);
             LoadAddresses();
+            if (C.Templates == null || C.Templates.Length == 0)
+            {
+                C.Templates = Template.GetDefaults();
+                C.Save(Program.AppPath);
+            }
+            SelectTemplate(0);
         }
 
         private void LoadAddresses()
@@ -73,9 +79,18 @@ namespace BinSend
                         C.Templates = Template.GetDefaults();
                     }
                     C.Save(Program.AppPath);
-                    SelectedTemplate = Math.Max(0, F.SelectedIndex);
                 }
+                SelectTemplate(Math.Max(0, F.SelectedIndex));
             }
+        }
+
+        private void SelectTemplate(int Sel)
+        {
+            SelectedTemplate = Sel;
+            var Selected = C.Templates[Sel];
+            btnTemplate.Text = $"Template: {Selected.Name}";
+            tbBody.Text = Selected.Content;
+
         }
     }
 }
