@@ -21,22 +21,23 @@ namespace BinSend
             WorkingTemplates = new List<Template>(this.Templates = Templates);
             InitializeComponent();
             SetTemplateList(Selected);
+            DialogResult = DialogResult.Cancel;
         }
 
         private void SetTemplateList(int Select = -1)
         {
-            cbEncoding.Items.Clear();
-            cbEncoding.Items.AddRange(WorkingTemplates.Select(m => (object)m.Name).ToArray());
-            if (Select > -1 && cbEncoding.Items.Count > 0)
+            lbTemplate.Items.Clear();
+            lbTemplate.Items.AddRange(WorkingTemplates.Select(m => (object)m.Name).ToArray());
+            if (Select > -1 && lbTemplate.Items.Count > 0)
             {
-                cbEncoding.SelectedIndex = Math.Max(Math.Min(Select, cbEncoding.Items.Count - 1), 0);
+                lbTemplate.SelectedIndex = Math.Max(Math.Min(Select, lbTemplate.Items.Count - 1), 0);
             }
             SelectedIndex = Select;
         }
 
         private void MoveUp()
         {
-            int Sel = cbEncoding.SelectedIndex;
+            int Sel = lbTemplate.SelectedIndex;
             if (Sel > 0)
             {
                 Swap(Sel, Sel - 1);
@@ -45,8 +46,8 @@ namespace BinSend
 
         private void MoveDown()
         {
-            int Sel = cbEncoding.SelectedIndex;
-            if (Sel < cbEncoding.Items.Count - 1)
+            int Sel = lbTemplate.SelectedIndex;
+            if (Sel < lbTemplate.Items.Count - 1)
             {
                 Swap(Sel, Sel + 1);
             }
@@ -57,7 +58,7 @@ namespace BinSend
             var T = WorkingTemplates[A];
             WorkingTemplates[A] = WorkingTemplates[B];
             WorkingTemplates[B] = T;
-            SetTemplateList(A);
+            SetTemplateList(B);
         }
 
         private void btnUp_Click(object sender, EventArgs e)
@@ -72,7 +73,7 @@ namespace BinSend
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            int Sel = cbEncoding.SelectedIndex;
+            int Sel = lbTemplate.SelectedIndex;
             if (Sel >= 0)
             {
                 WorkingTemplates.RemoveAt(Sel);
@@ -108,13 +109,13 @@ namespace BinSend
             if (Sel >= 0)
             {
                 tbBody.Text = WorkingTemplates[Sel].Content;
-                cbEncoding.SelectedIndex = (int)WorkingTemplates[Sel].Encoding;
+                lbTemplate.SelectedIndex = (int)WorkingTemplates[Sel].Encoding;
             }
         }
 
         private void tbBody_TextChanged(object sender, EventArgs e)
         {
-            var Sel = cbEncoding.SelectedIndex;
+            var Sel = lbTemplate.SelectedIndex;
             if (Sel > -1)
             {
                 var T = WorkingTemplates[Sel];
@@ -127,6 +128,7 @@ namespace BinSend
         private void btnSave_Click(object sender, EventArgs e)
         {
             Templates = WorkingTemplates.ToArray();
+            DialogResult = DialogResult.OK;
             Close();
         }
     }
