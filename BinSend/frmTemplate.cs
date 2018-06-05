@@ -22,6 +22,10 @@ namespace BinSend
             InitializeComponent();
             SetTemplateList(Selected);
             DialogResult = DialogResult.Cancel;
+            foreach (var E in Enum.GetValues(typeof(EncodingType)))
+            {
+                cbEncoding.Items.Add(E);
+            }
         }
 
         private void SetTemplateList(int Select = -1)
@@ -109,7 +113,7 @@ namespace BinSend
             if (Sel >= 0)
             {
                 tbBody.Text = WorkingTemplates[Sel].Content;
-                lbTemplate.SelectedIndex = (int)WorkingTemplates[Sel].Encoding;
+                cbEncoding.SelectedIndex = (int)WorkingTemplates[Sel].Encoding;
             }
         }
 
