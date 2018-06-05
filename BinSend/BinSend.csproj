@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitmessageRPC.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
