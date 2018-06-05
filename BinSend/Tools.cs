@@ -98,5 +98,36 @@ namespace BinSend
         {
             return JsonConvert.SerializeObject(o, Pretty ? Formatting.Indented : Formatting.None);
         }
+
+        /// <summary>
+        /// Converts this DateTime Object into a linux timestamp
+        /// </summary>
+        /// <param name="DT">Date Object</param>
+        /// <returns>Linux Timestamp</returns>
+        public static long ToLinuxTime(this DateTime DT)
+        {
+            return (long)DT.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
+        }
+
+        /// <summary>
+        /// Converts this integer from a Linux timestamp
+        /// </summary>
+        /// <param name="Timestamp">Timestamp</param>
+        /// <returns>Date Object</returns>
+        public static DateTime FromLinuxTime(this int Timestamp)
+        {
+            return FromLinuxTime((long)Timestamp);
+        }
+
+        /// <summary>
+        /// Converts this integer from a Linux timestamp
+        /// </summary>
+        /// <param name="Timestamp">Timestamp</param>
+        /// <returns>Date Object</returns>
+        public static DateTime FromLinuxTime(this long Timestamp)
+        {
+            return (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).AddSeconds(Timestamp);
+
+        }
     }
 }
