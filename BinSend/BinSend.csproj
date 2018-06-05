@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmessageRPC.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
