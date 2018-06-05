@@ -16,12 +16,11 @@ namespace BinSend
         public Template[] Templates;
         private List<Template> WorkingTemplates;
 
-        public frmTemplate(Template[] Templates)
+        public frmTemplate(Template[] Templates, int Selected)
         {
-            SelectedIndex = 0;
             WorkingTemplates = new List<Template>(this.Templates = Templates);
             InitializeComponent();
-            SetTemplateList();
+            SetTemplateList(Selected);
         }
 
         private void SetTemplateList(int Select = -1)
@@ -86,12 +85,19 @@ namespace BinSend
             var S = Tools.Prompt("Please enter the new Template name", "Template name", "new");
             if (S != null)
             {
-                WorkingTemplates.Add(new Template()
+                if (WorkingTemplates.Any(m => m.Name.ToLower() == S.ToLower()))
                 {
-                    Name = S,
-                    Content = "",
-                    Encoding = EncodingType.Base64
-                });
+                    MessageBox.Show("This Template name already exists", "New Template", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else
+                {
+                    WorkingTemplates.Add(new Template()
+                    {
+                        Name = S,
+                        Content = "",
+                        Encoding = EncodingType.Base64
+                    });
+                }
             }
             SetTemplateList(WorkingTemplates.Count - 1);
         }
@@ -116,6 +122,12 @@ namespace BinSend
                 WorkingTemplates[Sel] = T;
             }
 
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            Templates = WorkingTemplates.ToArray();
+            Close();
         }
     }
 }
