@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BinSend.Properties;
+using System;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -80,6 +81,26 @@ namespace BinSend
                 DialogResult = DialogResult.OK;
                 Close();
             }
+        }
+
+        private void lvAddresses_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete && e.Modifiers == Keys.None && lvAddresses.SelectedItems.Count == 1 && MessageBox.Show($"Delete {lvAddresses.SelectedItems[0].SubItems[1].Text}?", "Address Book", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                var Addr = lvAddresses.SelectedItems[0].SubItems[1].Text;
+                Tools.GetRPC(A).deleteAddressBookEntry(Addr);
+                FillList();
+            }
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            Tools.ShowHelp(Resources.HELP_AddrBook);
+        }
+
+        private void frmAddrBook_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Tools.CloseHelp();
         }
     }
 }

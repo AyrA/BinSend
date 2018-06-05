@@ -61,6 +61,35 @@ namespace BinSend.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address Book
+        ///============
+        ///
+        ///Use this form to manage your address book
+        ///
+        ///Creating an Entry
+        ///=================
+        ///To create an entry, type the address and label into the text boxes and click &quot;Save&quot;
+        ///
+        ///Editing an Entry
+        ///================
+        ///Select an entry from the list and then edit its label.
+        ///You can&apos;t edit the address itself.
+        ///If you modify the address it will create a new entry instead.
+        ///
+        ///Deleting an Entry
+        ///=================
+        ///Click on an Entry and then press the [DEL] key
+        ///
+        ///Selecting an Entry
+        ///=========== [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string HELP_AddrBook {
+            get {
+                return ResourceManager.GetString("HELP_AddrBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Templates
         ///=========
         ///

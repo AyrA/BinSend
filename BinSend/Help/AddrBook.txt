@@ -1,0 +1,23 @@
+﻿Address Book
+============
+
+Use this form to manage your address book
+
+Creating an Entry
+=================
+To create an entry, type the address and label into the text boxes and click "Save".
+
+Editing an Entry
+================
+Select an entry from the list and then edit its label and click "Save".
+You can't edit the address itself.
+If you modify the address it will create a new entry instead.
+
+Deleting an Entry
+=================
+Click on an Entry and then press the [DEL] key
+
+Selecting an Entry
+==================
+To select an entry to use in BinSend, double click it.
+As an alternative you can also use the arrow in the "To" field of the main window.

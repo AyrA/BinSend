@@ -29,7 +29,7 @@ namespace BinSend
             SuspendLayout();
             var selected = cbFromAddr.SelectedItem == null ? "" : Tools.GetBmAddr(cbFromAddr.SelectedItem.ToString());
 
-            tbToAddr.AutoCompleteCustomSource.Clear();
+            cbToAddr.Items.Clear();
             cbFromAddr.Items.Clear();
 
             var Contacts = RPC.listAddressBookEntries().FromJson<BitmessageAddrInfoContainer>();
@@ -37,7 +37,7 @@ namespace BinSend
             {
                 foreach (var A in Contacts.addresses)
                 {
-                    tbToAddr.AutoCompleteCustomSource.Add($"{A.address} [{A.label.B64().UTF()}]");
+                    cbToAddr.Items.Add($"{A.address} [{A.label.B64().UTF()}]");
                 }
             }
             var Self = RPC.listAddresses().FromJson<BitmessageAddrInfoContainer>();
@@ -48,7 +48,7 @@ namespace BinSend
                     //Add own addresses to recipient list too
                     if (!Contacts.addresses.Any(m => m.address == A.address))
                     {
-                        tbToAddr.AutoCompleteCustomSource.Add($"{A.address} [{A.label}]");
+                        cbToAddr.Items.Add($"{A.address} [{A.label}]");
                     }
                     cbFromAddr.Items.Add($"{A.label} <{A.address}>");
                     //Reselect our address
@@ -110,7 +110,7 @@ namespace BinSend
             {
                 if (F.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(F.SelectedAddress))
                 {
-                    tbToAddr.Text = F.SelectedAddress;
+                    cbToAddr.Text = F.SelectedAddress;
                 }
                 LoadAddresses();
             }

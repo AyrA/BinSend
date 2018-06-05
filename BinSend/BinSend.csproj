@@ -148,6 +148,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Help\AddrBook.txt" />
     <Content Include="Help\Template.txt">
       <SubType>Text</SubType>
     </Content>

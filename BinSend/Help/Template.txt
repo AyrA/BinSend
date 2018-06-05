@@ -41,7 +41,6 @@ The numbers are as follows:
 
 BINSEND Format
 ==============
-
 The BINSEND format can be used to automatically decode chunks into complete files.
 To use, put this content into the message: #BEGIN#{BINSEND:CHUNK}#END#
 

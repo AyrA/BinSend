@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbLabel = new System.Windows.Forms.TextBox();
             this.tbAddress = new System.Windows.Forms.TextBox();
+            this.btnHelp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lvAddresses
@@ -55,6 +56,7 @@
             this.lvAddresses.View = System.Windows.Forms.View.Details;
             this.lvAddresses.SelectedIndexChanged += new System.EventHandler(this.lvAddresses_SelectedIndexChanged);
             this.lvAddresses.DoubleClick += new System.EventHandler(this.lvAddresses_DoubleClick);
+            this.lvAddresses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvAddresses_KeyDown);
             // 
             // chLabel
             // 
@@ -67,10 +69,10 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(497, 324);
+            this.btnSave.Location = new System.Drawing.Point(519, 324);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 5;
+            this.btnSave.Size = new System.Drawing.Size(53, 23);
+            this.btnSave.TabIndex = 6;
             this.btnSave.Text = "&Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -109,8 +111,19 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbAddress.Location = new System.Drawing.Point(252, 326);
             this.tbAddress.Name = "tbAddress";
-            this.tbAddress.Size = new System.Drawing.Size(239, 20);
+            this.tbAddress.Size = new System.Drawing.Size(202, 20);
             this.tbAddress.TabIndex = 4;
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHelp.Location = new System.Drawing.Point(460, 324);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(53, 23);
+            this.btnHelp.TabIndex = 5;
+            this.btnHelp.Text = "&Help";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // frmAddrBook
             // 
@@ -121,10 +134,12 @@
             this.Controls.Add(this.tbLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lvAddresses);
             this.Name = "frmAddrBook";
             this.Text = "Address Book";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAddrBook_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -140,5 +155,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbLabel;
         private System.Windows.Forms.TextBox tbAddress;
+        private System.Windows.Forms.Button btnHelp;
     }
 }

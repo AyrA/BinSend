@@ -31,7 +31,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbFromAddr = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.tbToAddr = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbSubject = new System.Windows.Forms.TextBox();
             this.tbBody = new System.Windows.Forms.TextBox();
@@ -50,6 +49,7 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.btnTemplate = new System.Windows.Forms.Button();
             this.OFD = new System.Windows.Forms.OpenFileDialog();
+            this.cbToAddr = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudChunk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTTL)).BeginInit();
             this.SuspendLayout();
@@ -82,17 +82,6 @@
             this.label2.Size = new System.Drawing.Size(20, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "To";
-            // 
-            // tbToAddr
-            // 
-            this.tbToAddr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbToAddr.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbToAddr.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbToAddr.Location = new System.Drawing.Point(61, 33);
-            this.tbToAddr.Name = "tbToAddr";
-            this.tbToAddr.Size = new System.Drawing.Size(458, 20);
-            this.tbToAddr.TabIndex = 4;
             // 
             // label3
             // 
@@ -291,11 +280,22 @@
             this.OFD.Filter = "All Files|*.*";
             this.OFD.Title = "Select file to send";
             // 
+            // cbToAddr
+            // 
+            this.cbToAddr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbToAddr.FormattingEnabled = true;
+            this.cbToAddr.Location = new System.Drawing.Point(61, 32);
+            this.cbToAddr.Name = "cbToAddr";
+            this.cbToAddr.Size = new System.Drawing.Size(458, 21);
+            this.cbToAddr.TabIndex = 4;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 462);
+            this.Controls.Add(this.cbToAddr);
             this.Controls.Add(this.btnTemplate);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.tbFile);
@@ -312,7 +312,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.tbToAddr);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.cbFromAddr);
@@ -332,7 +331,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbFromAddr;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbToAddr;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbSubject;
         private System.Windows.Forms.TextBox tbBody;
@@ -351,6 +349,7 @@
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button btnTemplate;
         private System.Windows.Forms.OpenFileDialog OFD;
+        private System.Windows.Forms.ComboBox cbToAddr;
     }
 }
 
