@@ -33,10 +33,20 @@ namespace BinSend
         [STAThread]
         static void Main()
         {
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+
+            var C = Config.Load(AppPath);
+
+            if (C.Valid())
+            {
+                Application.Run(new frmMain());
+            }
+            else
+            {
+                C = Config.GetDefaults();
+                MessageBox.Show("Invalid Configuration. Please set your API values", "Invalid API settings", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
     }
 }

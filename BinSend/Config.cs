@@ -19,6 +19,27 @@ namespace BinSend
                 ApiSettings.Valid();
         }
 
+        public bool Save(string Dir)
+        {
+            if (string.IsNullOrEmpty(Dir))
+            {
+                Dir = Environment.CurrentDirectory;
+            }
+
+            var P = Path.Combine(Dir, CONF_NAME);
+
+            try
+            {
+                //Serialize with formatting because this file is likely edited by the user
+                File.WriteAllText(P, this.ToJson(true));
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
         public static Config Load(string Dir)
         {
             if (string.IsNullOrEmpty(Dir))
@@ -37,6 +58,15 @@ namespace BinSend
 
             }
             return default(Config);
+        }
+
+        public static Config GetDefaults()
+        {
+            return new Config()
+            {
+                ApiSettings = ApiConfig.GetDefaults(),
+                Templates = Template.GetDefaults()
+            };
         }
     }
 
@@ -141,6 +171,17 @@ Works in all major browsers.<br />
         public int Port;
         public string Username;
         public string Password;
+
+        public static ApiConfig GetDefaults()
+        {
+            return new ApiConfig()
+            {
+                IpOrHostname = "127.0.0.1",
+                Port = 8442,
+                Username = "username",
+                Password = "password"
+            };
+        }
 
         public bool Valid()
         {
