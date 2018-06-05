@@ -8,6 +8,7 @@ namespace BinSend
     {
         private BitmessageRPC RPC;
         private Config C;
+        private int SelectedTemplate = 0;
 
         public frmMain(Config Configuration)
         {
@@ -57,6 +58,23 @@ namespace BinSend
             if (OFD.ShowDialog() == DialogResult.OK)
             {
                 tbFile.Text = OFD.FileName;
+            }
+        }
+
+        private void btnTemplate_Click(object sender, EventArgs e)
+        {
+            using (var F = new frmTemplate(C.Templates, SelectedTemplate))
+            {
+                if (F.ShowDialog() == DialogResult.OK)
+                {
+                    C.Templates = F.Templates;
+                    if (C.Templates == null || C.Templates.Length == 0)
+                    {
+                        C.Templates = Template.GetDefaults();
+                    }
+                    C.Save(Program.AppPath);
+                    SelectedTemplate = Math.Max(0, F.SelectedIndex);
+                }
             }
         }
     }

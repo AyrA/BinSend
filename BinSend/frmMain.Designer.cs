@@ -282,6 +282,7 @@
             this.btnTemplate.TabIndex = 15;
             this.btnTemplate.Text = "Template";
             this.btnTemplate.UseVisualStyleBackColor = true;
+            this.btnTemplate.Click += new System.EventHandler(this.btnTemplate_Click);
             // 
             // OFD
             // 
