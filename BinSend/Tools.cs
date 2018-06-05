@@ -39,6 +39,25 @@ namespace BinSend
         }
 
         /// <summary>
+        /// Handles the Prompt Dialog
+        /// </summary>
+        /// <param name="Prompt">Dialog Prompt</param>
+        /// <param name="Title">Dialog Title</param>
+        /// <param name="Default">Default value to prefill</param>
+        /// <returns>User input (null on cancel)</returns>
+        public static string Prompt(string Prompt, string Title, string Default)
+        {
+            using (var F = new frmPrompt(Prompt,Title,Default))
+            {
+                if (F.ShowDialog()==System.Windows.Forms.DialogResult.OK)
+                {
+                    return F.Value;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Gets the Bitmessage RPC component with the given Configuration vbalues
         /// </summary>
         /// <param name="C"></param>

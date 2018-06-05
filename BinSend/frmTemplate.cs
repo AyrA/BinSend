@@ -14,13 +14,13 @@ namespace BinSend
     {
         public int SelectedIndex;
         public Template[] Templates;
-        private Template[] WorkingTemplates;
+        private List<Template> WorkingTemplates;
 
 
         public frmTemplate(Template[] Templates)
         {
             SelectedIndex = 0;
-            WorkingTemplates = (Template[])(this.Templates = Templates).Clone();
+            WorkingTemplates = new List<Template>(this.Templates = Templates);
             InitializeComponent();
             SetTemplateList();
         }
@@ -76,9 +76,24 @@ namespace BinSend
             int Sel = cbEncoding.SelectedIndex;
             if (Sel >= 0)
             {
-                WorkingTemplates = WorkingTemplates.Where((v, i) => i != Sel).ToArray();
+                WorkingTemplates.RemoveAt(Sel);
             }
             SetTemplateList(Sel);
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            var S = Tools.Prompt("Please enter the new Template name", "Template name", "new");
+            if (S != null)
+            {
+                WorkingTemplates.Add(new Template()
+                {
+                    Name = S,
+                    Content = "",
+                    Encoding = EncodingType.Base64
+                });
+            }
+            SetTemplateList(WorkingTemplates.Count - 1);
         }
     }
 }
