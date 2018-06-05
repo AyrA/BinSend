@@ -63,6 +63,12 @@
     <Compile Include="frmAddr.Designer.cs">
       <DependentUpon>frmAddr.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmAddrBook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddrBook.Designer.cs">
+      <DependentUpon>frmAddrBook.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmApiConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     <Compile Include="Tools.cs" />
     <EmbeddedResource Include="frmAddr.resx">
       <DependentUpon>frmAddr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddrBook.resx">
+      <DependentUpon>frmAddrBook.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmApiConfig.resx">
       <DependentUpon>frmApiConfig.cs</DependentUpon>

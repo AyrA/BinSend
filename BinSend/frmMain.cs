@@ -26,6 +26,7 @@ namespace BinSend
 
         private void LoadAddresses()
         {
+            SuspendLayout();
             var selected = cbFromAddr.SelectedItem == null ? "" : Tools.GetBmAddr(cbFromAddr.SelectedItem.ToString());
 
             tbToAddr.AutoCompleteCustomSource.Clear();
@@ -57,6 +58,7 @@ namespace BinSend
                     }
                 }
             }
+            ResumeLayout();
         }
 
         private void btnSelectFile_Click(object sender, EventArgs e)
@@ -98,6 +100,18 @@ namespace BinSend
             using (var F = new frmAddr(C.ApiSettings))
             {
                 F.ShowDialog();
+                LoadAddresses();
+            }
+        }
+
+        private void btnAddressBook_Click(object sender, EventArgs e)
+        {
+            using (var F = new frmAddrBook(C.ApiSettings))
+            {
+                if (F.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(F.SelectedAddress))
+                {
+                    tbToAddr.Text = F.SelectedAddress;
+                }
                 LoadAddresses();
             }
         }

@@ -263,6 +263,7 @@
             this.btnAddressBook.TabIndex = 5;
             this.btnAddressBook.Text = "...";
             this.btnAddressBook.UseVisualStyleBackColor = true;
+            this.btnAddressBook.Click += new System.EventHandler(this.btnAddressBook_Click);
             // 
             // btnSend
             // 
