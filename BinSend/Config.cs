@@ -84,7 +84,7 @@ namespace BinSend
         /// <summary>
         /// The default Template
         /// </summary>
-        public const string DEFAULT = @"ENTER DESCRIPTION HERE
+        public const string DEFAULT = @"BINSEND FORMAT
 ==================
 This is a chunked file transfer over bitmessage.
 You can reassemble the parts using BinSend: https://github.com/AyrA/BinSend
@@ -106,7 +106,7 @@ Content={6}";
         /// <summary>
         /// The default Template (short form)
         /// </summary>
-        public const string DEFAULT_SHORT = @"ENTER DESCRIPTION HERE
+        public const string DEFAULT_SHORT = @"BINSEND FORMAT
 ==================
 This is a chunked file transfer over bitmessage.
 You can reassemble the parts using BinSend: https://github.com/AyrA/BinSend

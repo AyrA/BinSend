@@ -20,21 +20,26 @@ namespace BinSend
         {
             WorkingTemplates = new List<Template>(this.Templates = Templates);
             InitializeComponent();
-            SetTemplateList(Selected);
-            DialogResult = DialogResult.Cancel;
             foreach (var E in Enum.GetValues(typeof(EncodingType)))
             {
                 cbEncoding.Items.Add(E);
             }
+            SetTemplateList(Selected);
+            DialogResult = DialogResult.Cancel;
         }
 
         private void SetTemplateList(int Select = -1)
         {
+            cbEncoding.SelectedIndex = 0;
             lbTemplate.Items.Clear();
             lbTemplate.Items.AddRange(WorkingTemplates.Select(m => (object)m.Name).ToArray());
             if (Select > -1 && lbTemplate.Items.Count > 0)
             {
                 lbTemplate.SelectedIndex = Math.Max(Math.Min(Select, lbTemplate.Items.Count - 1), 0);
+            }
+            else
+            {
+                tbBody.Text = "";
             }
             SelectedIndex = Select;
         }
@@ -81,8 +86,12 @@ namespace BinSend
             if (Sel >= 0)
             {
                 WorkingTemplates.RemoveAt(Sel);
+                SetTemplateList(Sel);
+                if (WorkingTemplates.Count == 0)
+                {
+                    MessageBox.Show("You removed all Templates. Saving now will restore the defaults.", "No Templates", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            SetTemplateList(Sel);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -103,8 +112,8 @@ namespace BinSend
                         Encoding = EncodingType.Base64
                     });
                 }
+                SetTemplateList(WorkingTemplates.Count - 1);
             }
-            SetTemplateList(WorkingTemplates.Count - 1);
         }
 
         private void lbTemplate_SelectedIndexChanged(object sender, EventArgs e)
@@ -113,14 +122,14 @@ namespace BinSend
             if (Sel >= 0)
             {
                 tbBody.Text = WorkingTemplates[Sel].Content;
-                cbEncoding.SelectedIndex = (int)WorkingTemplates[Sel].Encoding;
+                cbEncoding.SelectedItem = WorkingTemplates[Sel].Encoding;
             }
         }
 
         private void tbBody_TextChanged(object sender, EventArgs e)
         {
             var Sel = lbTemplate.SelectedIndex;
-            if (Sel > -1)
+            if (Sel > -1 && WorkingTemplates.Count > Sel)
             {
                 var T = WorkingTemplates[Sel];
                 T.Content = tbBody.Text;
@@ -134,6 +143,18 @@ namespace BinSend
             Templates = WorkingTemplates.ToArray();
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void cbEncoding_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var SelE = cbEncoding.SelectedIndex;
+            var SelT = lbTemplate.SelectedIndex;
+            if (SelE > -1 && SelT > -1 && WorkingTemplates.Count > SelT)
+            {
+                var T = WorkingTemplates[SelT];
+                T.Encoding = (EncodingType)cbEncoding.SelectedItem;
+                WorkingTemplates[SelT] = T;
+            }
         }
     }
 }

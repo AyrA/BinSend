@@ -128,6 +128,7 @@
             this.cbEncoding.Name = "cbEncoding";
             this.cbEncoding.Size = new System.Drawing.Size(315, 21);
             this.cbEncoding.TabIndex = 13;
+            this.cbEncoding.SelectedIndexChanged += new System.EventHandler(this.cbEncoding_SelectedIndexChanged);
             // 
             // frmTemplate
             // 

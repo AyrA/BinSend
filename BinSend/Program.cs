@@ -40,27 +40,10 @@ namespace BinSend
 
             if (C.Valid())
             {
+                BitmessageClientStatus Status = default(BitmessageClientStatus);
                 try
                 {
-                    var Status = Tools.GetRPC(C.ApiSettings).clientStatus().FromJson<BitmessageClientStatus>();
-                    if (!string.IsNullOrEmpty(Status.softwareName))
-                    {
-                        try
-                        {
-                            Application.Run(new frmMain(C));
-                        }
-                        catch (Exception ex)
-                        {
-#if !DEBUG
-                            //TODO:Nice Exception handler
-                            MessageBox.Show($"{ex.Message}\r\n\r\n{ex.StackTrace}", "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-#endif
-                        }
-                    }
-                    else if (MessageBox.Show("API returned unexpected data. Reconfigure now? Selecting ''No'' will exit", "API Error", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        Configure();
-                    }
+                    Status = Tools.GetRPC(C.ApiSettings).clientStatus().FromJson<BitmessageClientStatus>();
                 }
                 catch (Exception ex)
                 {
@@ -72,6 +55,26 @@ Edit Configuratio now? Selecting ''No'' will exit", "API Error", MessageBoxButto
                     {
                         Configure();
                     }
+                }
+                if (!string.IsNullOrEmpty(Status.softwareName))
+                {
+#if DEBUG
+                    Application.Run(new frmMain(C));
+#else
+                    try
+                    {
+                        Application.Run(new frmMain(C));
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO:Nice Exception handler
+                        MessageBox.Show($"{ex.Message}\r\n\r\n{ex.StackTrace}", "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+#endif
+                }
+                else if (MessageBox.Show("API returned unexpected data. Reconfigure now? Selecting ''No'' will exit", "API Error", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    Configure();
                 }
             }
             else
