@@ -1,0 +1,59 @@
+﻿Main Window
+===========
+
+In this window you assemble your messages and access other functions
+
+From
+====
+Use this field to select the "From" address for your messages.
+This always contains two special values:
+
+- BM-SRND: This generates a new address and sends all parts from it
+- BM-MRND: This generates a new random address for each part
+
+You can generate addresses yourself using the button next to the select box
+
+To
+==
+This is the recipient.
+You can type/paste an address or select one from the drop down list.
+The list contains all address book entries and your own addresses.
+You can manage the address book with the button next to the field.
+
+If you don't enter anything BinSend will send out broadcasts.
+
+Subject
+=======
+This is the subject of all your parts.
+This can be freely chosen.
+If it is blank it will be filled with the file name
+
+Body
+====
+This is used to set the contents of each message.
+The body can contain placeholders.
+You can read more about them in the template help
+
+Chunk size
+==========
+This defines the chunk size  if the file doesn't fits one part.
+Please be aware that this defines the number of kilobytes from the input file and does't accounts for encoding overhead.
+
+TTL
+===
+Defines how long the message is stored in the bitmessage network.
+Setting this higher makes the time needed to send a part longer.
+
+Template
+========
+The template button allows you to select and manage templates
+
+File
+====
+Used to set the file to send.
+If you want to send multiple files, please put them into an archive first.
+You can either enter or paste the path manually or use the button next to the field to select a file.
+
+Send
+====
+This will create parts and send your message.
