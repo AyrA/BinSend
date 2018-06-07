@@ -15,6 +15,10 @@ The changes are remembered immediately and you can freely switch between multipl
 To use the changed template(s) you have to click "Save".
 Simply closing the window with the [X] or "Close" button will discard all changes.
 
+Use a Template
+==============
+Simply select a template and close the window.
+
 Reordering
 ==========
 The first template in the list is loaded by default.
@@ -62,7 +66,8 @@ Explanation of fields:
 
 SameOrigin:
 This indicates if all parts must come from the same address as the first part.
-You usually want this enabled unless you send parts from multiple clients with different addresses.
+You usually want this enabled unless you send parts from multiple clients with different addresses
+or if you use the BM-MRND "From" address.
 
 Name:
 This is the file name
