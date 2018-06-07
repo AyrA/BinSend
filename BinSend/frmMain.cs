@@ -32,6 +32,11 @@ namespace BinSend
             cbToAddr.Items.Clear();
             cbFromAddr.Items.Clear();
 
+            //Single address for send
+            cbFromAddr.Items.Add("Random Single <BM-SRND>");
+            //Invividual part address
+            cbFromAddr.Items.Add("Random Multi <BM-MRND>");
+
             var Contacts = RPC.listAddressBookEntries().FromJson<BitmessageAddrInfoContainer>();
             if (Contacts.addresses != null)
             {
