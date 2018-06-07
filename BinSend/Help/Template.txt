@@ -83,5 +83,34 @@ Hex=3
 Negative numbers are reserved for custom encodings
 
 Content:
-
 This is the content, encoded using the specified Encoding
+
+Encoding
+========
+Different encodings fit different use cases. See below for an explanation
+
+Raw
+---
+This will use the content "as-is".
+Uses: Sending pre-encoded content or UTF-8 text.
+Ratio: 1 input byte -> 1 output byte
+
+Base64
+------
+Encodes your content as Base64.
+This encoding is widely used in other applications/protocols and easily available on all platforms.
+Uses: Sending binary content, data URL
+Ratio: 3 input bytes -> 4 output bytes
+
+Ascii85
+-------
+Similar to Base64 but with better ratio.
+Uses: Keeping size small
+Ratio: 4 input bytes -> 5 output bytes
+
+Hex
+---
+Writes the bytes as a hexadecimal string.
+Doubles the size of the data.
+Uses: Allowing the user to copy/paste into a hex editor directly
+Ratio: 1 input byte -> 2 output bytes
