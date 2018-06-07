@@ -1,7 +1,7 @@
 ﻿Main Window
 ===========
 
-In this window you assemble your messages and access other functions
+Here you assemble your messages and access other functions
 
 From
 ====

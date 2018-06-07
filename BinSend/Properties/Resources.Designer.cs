@@ -68,11 +68,11 @@ namespace BinSend.Properties {
         ///
         ///Creating an Entry
         ///=================
-        ///To create an entry, type the address and label into the text boxes and click &quot;Save&quot;
+        ///To create an entry, type the address and label into the text boxes and click &quot;Save&quot;.
         ///
         ///Editing an Entry
         ///================
-        ///Select an entry from the list and then edit its label.
+        ///Select an entry from the list and then edit its label and click &quot;Save&quot;.
         ///You can&apos;t edit the address itself.
         ///If you modify the address it will create a new entry instead.
         ///
@@ -80,12 +80,38 @@ namespace BinSend.Properties {
         ///=================
         ///Click on an Entry and then press the [DEL] key
         ///
-        ///Selecting an Entry
-        ///=========== [rest of string was truncated]&quot;;.
+        ///Selecting an  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HELP_AddrBook {
             get {
                 return ResourceManager.GetString("HELP_AddrBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main Window
+        ///===========
+        ///
+        ///In this window you assemble your messages and access other functions
+        ///
+        ///From
+        ///====
+        ///Use this field to select the &quot;From&quot; address for your messages.
+        ///This always contains two special values:
+        ///
+        ///- BM-SRND: This generates a new address and sends all parts from it
+        ///- BM-MRND: This generates a new random address for each part
+        ///
+        ///You can generate addresses yourself using the button next to the select box
+        ///
+        ///To
+        ///==
+        ///This is the recipient.
+        ///You can type/paste an address or select one from [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string HELP_Main {
+            get {
+                return ResourceManager.GetString("HELP_Main", resourceCulture);
             }
         }
         

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BinSend.Properties;
+using System;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -95,7 +96,7 @@ namespace BinSend
         {
             SelectedTemplate = Sel;
             var Selected = C.Templates[Sel];
-            btnTemplate.Text = $"Template: {Selected.Name}";
+            btnTemplate.Text = $"&Template: {Selected.Name}";
             tbBody.Text = Selected.Content;
 
         }
@@ -119,6 +120,11 @@ namespace BinSend
                 }
                 LoadAddresses();
             }
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            Tools.ShowHelp(Resources.HELP_Main);
         }
     }
 }
