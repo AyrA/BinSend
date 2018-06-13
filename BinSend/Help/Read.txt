@@ -1,0 +1,36 @@
+﻿Read Window
+===========
+
+In this window you can assemble parts into files
+
+Detected Contents
+=================
+This application can detect files sent via the Binsend format.
+Check the Help of the Template Window for information obout this format.
+This application has proper SameOrigin support.
+
+File List
+=========
+The leftmost box contains a list of all files found in your inboxes.
+It will only list files where the first part is available.
+
+File Details
+============
+The rightmost box contains the file details.
+It shows all available and missing parts in order
+
+Refresh
+=======
+This reloads the file list without the need to reopen the window.
+It will scan your client for new messages and fills in new files and parts.
+
+Delete
+======
+This button will delete all messages with the corresponding file.
+It is recommended to delete files you no longer need to speed up this application.
+
+Assemble
+========
+This assembles all existing parts into the full file.
+If your file misses some parts they will be missing from the assembled file too.
+Most file formats are unusable if segments are missing.

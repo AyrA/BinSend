@@ -168,6 +168,7 @@
   <ItemGroup>
     <Content Include="Help\AddrBook.txt" />
     <Content Include="Help\Main.txt" />
+    <Content Include="Help\Read.txt" />
     <Content Include="Help\Template.txt">
       <SubType>Text</SubType>
     </Content>

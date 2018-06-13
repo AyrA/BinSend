@@ -35,6 +35,8 @@
             this.btnAssemble = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnHelp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbFiles
@@ -59,7 +61,7 @@
             this.lvFragments.FullRowSelect = true;
             this.lvFragments.Location = new System.Drawing.Point(260, 12);
             this.lvFragments.Name = "lvFragments";
-            this.lvFragments.Size = new System.Drawing.Size(504, 446);
+            this.lvFragments.Size = new System.Drawing.Size(512, 446);
             this.lvFragments.TabIndex = 1;
             this.lvFragments.UseCompatibleStateImageBehavior = false;
             this.lvFragments.View = System.Windows.Forms.View.Details;
@@ -75,10 +77,10 @@
             // btnAssemble
             // 
             this.btnAssemble.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAssemble.Location = new System.Drawing.Point(689, 472);
+            this.btnAssemble.Location = new System.Drawing.Point(697, 472);
             this.btnAssemble.Name = "btnAssemble";
             this.btnAssemble.Size = new System.Drawing.Size(75, 23);
-            this.btnAssemble.TabIndex = 3;
+            this.btnAssemble.TabIndex = 4;
             this.btnAssemble.Text = "&Assemble";
             this.btnAssemble.UseVisualStyleBackColor = true;
             this.btnAssemble.Click += new System.EventHandler(this.btnAssemble_Click);
@@ -86,10 +88,10 @@
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(608, 472);
+            this.btnDelete.Location = new System.Drawing.Point(616, 472);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 2;
+            this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "&Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -98,17 +100,42 @@
             // 
             this.SFD.Title = "Assemble File";
             // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.Location = new System.Drawing.Point(535, 472);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 2;
+            this.btnRefresh.Text = "&Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHelp.Location = new System.Drawing.Point(454, 472);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(75, 23);
+            this.btnHelp.TabIndex = 2;
+            this.btnHelp.Text = "&Help";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
             // frmRead
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(776, 502);
+            this.ClientSize = new System.Drawing.Size(784, 502);
+            this.Controls.Add(this.btnHelp);
+            this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAssemble);
             this.Controls.Add(this.lvFragments);
             this.Controls.Add(this.lbFiles);
             this.Name = "frmRead";
             this.Text = "Read Files";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRead_FormClosing);
             this.ResumeLayout(false);
 
         }
@@ -122,5 +149,7 @@
         private System.Windows.Forms.Button btnAssemble;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.SaveFileDialog SFD;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Button btnHelp;
     }
 }

@@ -92,7 +92,7 @@ namespace BinSend.Properties {
         ///   Looks up a localized string similar to Main Window
         ///===========
         ///
-        ///In this window you assemble your messages and access other functions
+        ///Here you assemble your messages and access other functions
         ///
         ///From
         ///====
@@ -107,11 +107,20 @@ namespace BinSend.Properties {
         ///To
         ///==
         ///This is the recipient.
-        ///You can type/paste an address or select one from [rest of string was truncated]&quot;;.
+        ///You can type/paste an address or select one from the drop  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HELP_Main {
             get {
                 return ResourceManager.GetString("HELP_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string HELP_Read {
+            get {
+                return ResourceManager.GetString("HELP_Read", resourceCulture);
             }
         }
         

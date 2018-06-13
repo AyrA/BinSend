@@ -51,6 +51,8 @@ To use, put this content into the message: #BEGIN#{BINSEND:CHUNK}#END#
 The #END# marker is optional if no content follows the binsend chunk.
 Any number of whitespace is allowed between the chunk and the markers.
 
+Only the first occurrence of the Binsend placeholder is replaced with actual data.
+
 The format is a flat JSON with this structure:
 
 {
@@ -68,6 +70,8 @@ SameOrigin:
 This indicates if all parts must come from the same address as the first part.
 You usually want this enabled unless you send parts from multiple clients with different addresses
 or if you use the BM-MRND "From" address.
+Binsend uses SHA1 for file segment validation which will soon be no longer cryptographically secure.
+Using SameOrigin adds an additional layer of protection.
 
 Name:
 This is the file name.
@@ -77,8 +81,9 @@ Part:
 This is the number of the part (starting from 1)
 
 List:
-This is a list of sha1 hashes.
+This is a list of SHA1 hashes.
 It's only needed in the first part and ignored if present in others.
+It's recommended to only include this in the first part especially for large number of hashes.
 
 Encoding:
 This is an integer specifying the encoding. Supported by default are:
@@ -87,7 +92,7 @@ Base64=1
 Ascii85=2
 Hex=3
 
-Negative numbers are reserved for custom encodings
+Negative numbers are reserved for user defined encodings
 
 Content:
 This is the content, encoded using the specified Encoding
@@ -112,7 +117,7 @@ Ratio: 3 input bytes -> 4 output bytes
 Ascii85
 -------
 Similar to Base64 but with better ratio.
-Uses: Keeping size small
+Uses: Keeping size smaller than with Base64
 Ratio: 4 input bytes -> 5 output bytes
 
 Hex

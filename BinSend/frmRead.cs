@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BinSend.Properties;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -18,6 +19,13 @@ namespace BinSend
         {
             API = C;
             InitializeComponent();
+            ScanMessages();
+        }
+
+        private void ScanMessages()
+        {
+            lvFragments.Items.Clear();
+            lbFiles.Items.Clear();
             EnableAll(false);
             Thread T = new Thread(MessageReader);
             T.IsBackground = true;
@@ -193,6 +201,21 @@ namespace BinSend
             {
                 MessageBox.Show("The specified fragment doesn't matches any container available. Ensure no other application is interfacing with the bitmessage client at the moment", "Fragment container missing", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            ScanMessages();
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            Tools.ShowHelp(Resources.HELP_Read);
+        }
+
+        private void frmRead_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Tools.CloseHelp();
         }
     }
 }
