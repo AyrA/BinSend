@@ -57,9 +57,9 @@ The numbers are as follows:
 ## BINSEND Format
 
 The BINSEND format can be used to automatically decode chunks into complete files.
-To use, put this content into the message: #BEGIN#{BINSEND:CHUNK}#END#
+To use, put this content into the message: `#BEGIN#{BINSEND:CHUNK}#END#`
 
-The #END# marker is optional if no content follows the binsend chunk.
+The `#END#` marker is optional if no content follows the binsend chunk.
 Any number of whitespace is allowed between the chunk and the markers.
 
 Only the first occurrence of the Binsend placeholder is replaced with actual data.
