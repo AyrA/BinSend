@@ -185,11 +185,7 @@ namespace BinSend
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            SendMessages = btnCancel.Enabled = false;
-            if (Sender == null)
-            {
-                Close();
-            }
+            Close();
         }
 
         private void frmSend_ResizeEnd(object sender, EventArgs e)
