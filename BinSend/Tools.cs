@@ -19,6 +19,24 @@ namespace BinSend
         private static extern void OutputDebugStringW([MarshalAs(UnmanagedType.LPWStr)]string Message);
 
         /// <summary>
+        /// Placeholder for a single random BM address
+        /// </summary>
+        public const string BM_SRND = "BM-SRND";
+        /// <summary>
+        /// Placeholder for multiple random source addresses
+        /// </summary>
+        public const string BM_MRND = "BM-MRND";
+        /// <summary>
+        /// Binsend chunk placeholder
+        /// </summary>
+        public const string BINSEND_CHUNK = "{BINSEND:CHUNK}";
+        /// <summary>
+        /// Regular expression to match a binsend chunk declaration in a template string
+        /// </summary>
+        public const string BINSEND_REGEX = @"#BEGIN#\s*{BINSEND:CHUNK}\s*(?:#END#\s*|$)";
+
+
+        /// <summary>
         /// Value designating to use all bytes
         /// </summary>
         public const int DATA_EVERYTHING = -1;
@@ -26,14 +44,102 @@ namespace BinSend
         /// Regular expression for basic BM Addr format detection
         /// </summary>
         public const string BM_REGEX = @"(BM-[\w]{30,35})";
+        /// <summary>
+        /// Hex format string
+        /// </summary>
         public const string FORMAT_HEX = "X2";
+        /// <summary>
+        /// Factor for sizes.
+        /// </summary>
+        /// <remarks>Kilo implies factor 1000 but 1024 is more common</remarks>
+        public const int SIZEFACTOR = 1024;
+        /// <summary>
+        /// Factor to get seconds from the user defined TTL
+        /// </summary>
+        public const int TIMEFACTOR = 3600;
 
+        /// <summary>
+        /// Processes a fragment and inserts values into a body template
+        /// </summary>
+        /// <param name="Body">Body template</param>
+        /// <param name="F">Fragment</param>
+        /// <param name="FileName">File name (no path)</param>
+        /// <param name="PartNumber">Part Number (starting at 1)</param>
+        /// <param name="TotalParts">Total number of parts</param>
+        /// <param name="HashList">List of Hashes</param>
+        /// <returns>processed template body</returns>
+        public static string ProcessFragmentBody(string Body, Fragment F, string FileName, int PartNumber, int TotalParts, string[] HashList)
+        {
+            //Must be in the order the template specifies placeholders
+            var data = new string[] {
+                FileName,
+                PartNumber.ToString(),
+                TotalParts.ToString(),
+                F.Encoding.ToString(),
+                F.Content.Length.ToString(),
+                string.Join(",",HashList),
+                F.Content
+            };
+
+            for (var i = 0; i < data.Length; i++)
+            {
+                Body = Body.Replace("{" + i.ToString() + "}", data[i]);
+            }
+
+            var R = new Regex(BINSEND_REGEX);
+
+            if (R.IsMatch(Body))
+            {
+                //Inserts the binsend fragment
+                var M = R.Match(Body);
+                Body =
+                    Body.Substring(0, M.Index) +
+                    ("#BEGIN#" + F.ToJson(true, true) + "#END#") +
+                    Body.Substring(M.Index + M.Length);
+            }
+            return Body;
+        }
+
+        /// <summary>
+        /// Logs a message to the windows debug log and attached debuggers
+        /// </summary>
+        /// <param name="Message">Message</param>
         public static void Log(string Message)
         {
 #if DEBUG
             OutputDebugStringW(Message);
             System.Diagnostics.Debug.WriteLine(Message);
 #endif
+        }
+
+        /// <summary>
+        /// Checks if the given text contains a valid sender address
+        /// </summary>
+        /// <param name="Input">Text</param>
+        /// <returns>true if valid sender</returns>
+        public static bool IsValidFromAddr(string Input)
+        {
+            return IsMRND(Input) || IsSRND(Input) || !string.IsNullOrEmpty(GetBmAddr(Input));
+        }
+
+        /// <summary>
+        /// Checks if the given input defines a single random address
+        /// </summary>
+        /// <param name="Input">Address</param>
+        /// <returns>true if SRND address</returns>
+        public static bool IsSRND(string Input)
+        {
+            return Input != null && Regex.IsMatch(Input, $"(<|^){BM_SRND}(>|$)");
+        }
+
+        /// <summary>
+        /// Checks if the given input defines multiple random addresses
+        /// </summary>
+        /// <param name="Input">Address</param>
+        /// <returns>true if MRND address</returns>
+        public static bool IsMRND(string Input)
+        {
+            return Input != null && Regex.IsMatch(Input, $"(<|^){BM_MRND}(>|$)");
         }
 
         /// <summary>
@@ -177,9 +283,9 @@ namespace BinSend
         /// <returns>User input (null on cancel)</returns>
         public static string Prompt(string Prompt, string Title, string Default)
         {
-            using (var F = new frmPrompt(Prompt,Title,Default))
+            using (var F = new frmPrompt(Prompt, Title, Default))
             {
-                if (F.ShowDialog()==System.Windows.Forms.DialogResult.OK)
+                if (F.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     return F.Value;
                 }
@@ -265,7 +371,7 @@ namespace BinSend
             {
                 return JsonConvert.DeserializeObject<T>(S);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Log($"JSON DECODE ERROR: {ex.Message}\r\nJSON DECODE ERROR: {S}");
                 return Default;
@@ -278,9 +384,9 @@ namespace BinSend
         /// <param name="o">Object</param>
         /// <param name="Pretty">Pretty print</param>
         /// <returns>JSON string</returns>
-        public static string ToJson(this object o, bool Pretty = false)
+        public static string ToJson(this object o, bool Pretty = false, bool StripNull = false)
         {
-            return JsonConvert.SerializeObject(o, Pretty ? Formatting.Indented : Formatting.None);
+            return JsonConvert.SerializeObject(o, Pretty ? Formatting.Indented : Formatting.None, new JsonSerializerSettings() { NullValueHandling = StripNull ? NullValueHandling.Ignore : NullValueHandling.Include });
         }
 
         /// <summary>

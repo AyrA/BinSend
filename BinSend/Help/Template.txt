@@ -41,7 +41,7 @@ The numbers are as follows:
 3: Encoding
 4: Length of encoded content
 5: Hash List
-6: Content
+6: Encoded content
 
 BINSEND Format
 ==============
@@ -70,13 +70,15 @@ You usually want this enabled unless you send parts from multiple clients with d
 or if you use the BM-MRND "From" address.
 
 Name:
-This is the file name
+This is the file name.
+It's only needed in the first part and ignored if present in others.
 
 Part:
 This is the number of the part (starting from 1)
 
 List:
-This is a list of sha1 hashes. It's only needed in the first part and ignored if present in others.
+This is a list of sha1 hashes.
+It's only needed in the first part and ignored if present in others.
 
 Encoding:
 This is an integer specifying the encoding. Supported by default are:

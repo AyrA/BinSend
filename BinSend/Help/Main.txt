@@ -32,7 +32,8 @@ Body
 ====
 This is used to set the contents of each message.
 The body can contain placeholders.
-You can read more about them in the template help
+You can read more about them in the template help.
+Modifications made to the body of a template in this window will not be saved.
 
 Chunk size
 ==========

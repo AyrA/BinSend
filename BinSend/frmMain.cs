@@ -1,5 +1,6 @@
 ﻿using BinSend.Properties;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -64,6 +65,10 @@ namespace BinSend
                     }
                 }
             }
+            if (cbFromAddr.SelectedIndex < 0)
+            {
+                cbFromAddr.SelectedIndex = 0;
+            }
             ResumeLayout();
         }
 
@@ -125,6 +130,59 @@ namespace BinSend
         private void btnHelp_Click(object sender, EventArgs e)
         {
             Tools.ShowHelp(Resources.HELP_Main);
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            if (Tools.IsValidFromAddr(cbFromAddr.SelectedItem.ToString()))
+            {
+                if (cbToAddr.Text == string.Empty || Tools.GetBmAddr(cbToAddr.Text) != null)
+                {
+                    if (File.Exists(tbFile.Text))
+                    {
+                        FileStream FS;
+                        try
+                        {
+                            FS = File.OpenRead(tbFile.Text);
+                        }
+                        catch (Exception ex)
+                        {
+                            Tools.Log("Unable to open file. Error: " + ex.Message);
+                            return;
+                        }
+                        using (FS)
+                        {
+                            if (SelectedTemplate >= 0 || SelectedTemplate < C.Templates.Length)
+                            {
+                                using (var F = new frmSend(FS, tbFile.Text, C.ApiSettings, C.Templates[SelectedTemplate], cbFromAddr.SelectedItem.ToString(), cbToAddr.Text, tbSubject.Text, tbBody.Text, (int)nudChunk.Value, (int)nudTTL.Value))
+                                {
+                                    Hide();
+                                    F.ShowDialog();
+                                    Show();
+                                    BringToFront();
+                                    Focus();
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("The selected template does not exist", "Template check", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("The file does not exist", "File check", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid \"To\" Address", "Address check", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid \"From\" Address", "Address check", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
