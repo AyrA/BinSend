@@ -93,6 +93,12 @@
     <Compile Include="frmPrompt.Designer.cs">
       <DependentUpon>frmPrompt.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmRead.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRead.Designer.cs">
+      <DependentUpon>frmRead.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSend.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmPrompt.resx">
       <DependentUpon>frmPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRead.resx">
+      <DependentUpon>frmRead.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSend.resx">
       <DependentUpon>frmSend.cs</DependentUpon>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -8,6 +9,8 @@ namespace BinSend
     public static class Program
     {
         private static string _appPath;
+        public static List<BitmessageMsg> MessageCache;
+
 
         /// <summary>
         /// Gets the Directory of this executable
@@ -35,6 +38,8 @@ namespace BinSend
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            MessageCache = new List<BitmessageMsg>();
 
             var C = Config.Load(AppPath);
 

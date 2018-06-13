@@ -88,6 +88,29 @@ namespace BinSend
         public int encodingType;
         public long receivedTime;
         public bool read;
+
+        public BitmessageMsg Decode()
+        {
+            if (!string.IsNullOrEmpty(subject))
+            {
+                subject = subject.B64().UTF();
+            }
+            if (!string.IsNullOrEmpty(message))
+            {
+                message = message.B64().UTF();
+            }
+            return this;
+        }
+    }
+
+    public struct BitmessageInboxMsg
+    {
+        public BitmessageMsg[] inboxMessage;
+    }
+
+    public struct BitmessageIdList
+    {
+        public BitmessageMsg[] inboxMessageIds;
     }
 
     /// <summary>
@@ -262,7 +285,7 @@ namespace BinSend
         /// <summary>
         /// Gets all message IDs from the inbox
         /// </summary>
-        /// <returns>JSON(BitmessageMsg[]), only msgid</returns>
+        /// <returns>JSON(BitmessageIdList)</returns>
         [XmlRpcMethod]
         string getAllInboxMessageIds();
 
@@ -271,7 +294,7 @@ namespace BinSend
         /// </summary>
         /// <param name="msgid">Message ID</param>
         /// <param name="read">Set read flag</param>
-        /// <returns>JSON(BitmessageMsg)</returns>
+        /// <returns>JSON(BitmessageInboxMsg)</returns>
         [XmlRpcMethod]
         string getInboxMessageById(string msgid, bool read = false);
 

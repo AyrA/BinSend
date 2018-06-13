@@ -51,6 +51,7 @@
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.cbToAddr = new System.Windows.Forms.ComboBox();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.btnRead = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudChunk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTTL)).BeginInit();
             this.SuspendLayout();
@@ -261,7 +262,7 @@
             this.btnSend.Location = new System.Drawing.Point(525, 427);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(47, 23);
-            this.btnSend.TabIndex = 20;
+            this.btnSend.TabIndex = 21;
             this.btnSend.Text = "&Send";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
@@ -295,13 +296,24 @@
             // btnHelp
             // 
             this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnHelp.Location = new System.Drawing.Point(472, 427);
+            this.btnHelp.Location = new System.Drawing.Point(419, 427);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(47, 23);
             this.btnHelp.TabIndex = 19;
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
+            // btnRead
+            // 
+            this.btnRead.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRead.Location = new System.Drawing.Point(472, 427);
+            this.btnRead.Name = "btnRead";
+            this.btnRead.Size = new System.Drawing.Size(47, 23);
+            this.btnRead.TabIndex = 20;
+            this.btnRead.Text = "&Read";
+            this.btnRead.UseVisualStyleBackColor = true;
+            this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
             // 
             // frmMain
             // 
@@ -310,6 +322,7 @@
             this.ClientSize = new System.Drawing.Size(584, 462);
             this.Controls.Add(this.cbToAddr);
             this.Controls.Add(this.btnTemplate);
+            this.Controls.Add(this.btnRead);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.tbFile);
@@ -365,6 +378,7 @@
         private System.Windows.Forms.OpenFileDialog OFD;
         private System.Windows.Forms.ComboBox cbToAddr;
         private System.Windows.Forms.Button btnHelp;
+        private System.Windows.Forms.Button btnRead;
     }
 }
 

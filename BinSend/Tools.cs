@@ -31,6 +31,14 @@ namespace BinSend
         /// </summary>
         public const string BINSEND_CHUNK = "{BINSEND:CHUNK}";
         /// <summary>
+        /// Binsend Start marker
+        /// </summary>
+        public const string BINSEND_START = "#BEGIN#";
+        /// <summary>
+        /// Binsend End marker
+        /// </summary>
+        public const string BINSEND_END = "#END#";
+        /// <summary>
         /// Regular expression to match a binsend chunk declaration in a template string
         /// </summary>
         public const string BINSEND_REGEX = @"#BEGIN#\s*{BINSEND:CHUNK}\s*(?:#END#\s*|$)";
@@ -57,6 +65,29 @@ namespace BinSend
         /// Factor to get seconds from the user defined TTL
         /// </summary>
         public const int TIMEFACTOR = 3600;
+
+        /// <summary>
+        /// Extracts a fragment from a Binsend formatted message body
+        /// </summary>
+        /// <param name="MessageBody">Message body</param>
+        /// <returns>Fragment, null if not found</returns>
+        public static Fragment GetFragment(string MessageBody)
+        {
+            if (!string.IsNullOrEmpty(MessageBody) && MessageBody.Contains(BINSEND_START))
+            {
+                //Find start segment
+                var Start = MessageBody.IndexOf(BINSEND_START)+ BINSEND_START.Length;
+                var End = MessageBody.IndexOf(BINSEND_END, Start);
+                //End is optional
+                if (End < 0)
+                {
+                    End = MessageBody.Length;
+                }
+                //Try to decode the fragment
+                return MessageBody.Substring(Start, End - Start).Trim().FromJson<Fragment>();
+            }
+            return null;
+        }
 
         /// <summary>
         /// Processes a fragment and inserts values into a body template

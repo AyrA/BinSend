@@ -184,5 +184,13 @@ namespace BinSend
                 MessageBox.Show("Invalid \"From\" Address", "Address check", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnRead_Click(object sender, EventArgs e)
+        {
+            using (var F = new frmRead(C.ApiSettings))
+            {
+                F.ShowDialog();
+            }
+        }
     }
 }
