@@ -82,10 +82,10 @@ namespace BinSend
                     {
                         Encoding = Template.Encoding,
                         Name = Fragments.Count == 0 ? Path.GetFileName(FileName) : null,
-                        SameOrigin = From != Tools.BM_MRND,
+                        SameOrigin = From != string.Empty,
                         Part = ++iterator
                     };
-                    F.Encode(Data);
+                    F.Encode(Data, 0, count);
                     Fragments.Add(F);
                 }
             } while (count > 0);
