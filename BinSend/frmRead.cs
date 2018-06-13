@@ -93,7 +93,7 @@ namespace BinSend
             });
         }
 
-        private void lbFiles_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void lbFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbFiles.SelectedIndex >= 0)
             {
@@ -139,7 +139,7 @@ namespace BinSend
             lvFragments.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
-        private void btnDelete_Click(object sender, System.EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
             var F = (Fragment)lbFiles.SelectedItem;
             var Origin = Fragments.FirstOrDefault(m => m.GetPrimary().Contains(F));
@@ -150,6 +150,7 @@ namespace BinSend
                     Origin.Delete(Tools.GetRPC(API));
                     lvFragments.Items.Clear();
                     lbFiles.Items.Remove(F);
+                    MessageBox.Show($"Fragments deleted.", "Deleting Fragments", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else
@@ -158,7 +159,7 @@ namespace BinSend
             }
         }
 
-        private void btnAssemble_Click(object sender, System.EventArgs e)
+        private void btnAssemble_Click(object sender, EventArgs e)
         {
             var F = (Fragment)lbFiles.SelectedItem;
             var Origin = Fragments.FirstOrDefault(m => m.GetPrimary().Contains(F));
@@ -179,6 +180,7 @@ namespace BinSend
                     try
                     {
                         File.WriteAllBytes(SFD.FileName, Origin.Join(All));
+                        MessageBox.Show($"Fragments sucessfully assembled.", "Assembling File", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
