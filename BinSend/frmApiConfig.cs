@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
 
@@ -12,6 +13,10 @@ namespace BinSend
         {
             ApiConfiguration = C.ApiSettings;
             InitializeComponent();
+
+            //Prevent vertical sizing
+            MaximumSize = new Size(int.MaxValue, MinimumSize.Height);
+
             nudPort.Minimum = IPEndPoint.MinPort;
             nudPort.Maximum = IPEndPoint.MaxPort;
             tbIP.Text = ApiConfiguration.IpOrHostname;

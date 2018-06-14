@@ -114,6 +114,7 @@
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(169, 20);
             this.tbPassword.TabIndex = 7;
+            this.tbPassword.UseSystemPasswordChar = true;
             // 
             // btnCancel
             // 
