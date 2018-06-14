@@ -23,6 +23,7 @@ namespace BinSend
         private List<Fragment> Fragments;
         private Thread Sender;
         private volatile bool SendMessages;
+        private volatile bool TrashSent;
 
 
         public frmSend(Stream Input, string FileName, ApiConfig A, Template T, string From, string To, string Subject, string Body, int ChunkSize, int TTL)
@@ -55,6 +56,8 @@ namespace BinSend
             MaximumSize = new Size(int.MaxValue, MinimumSize.Height);
 
             InitializeComponent();
+
+            TrashSent = cbClearSent.Checked;
 
             lblStatus.Text = "Processing Fragments...";
 
@@ -115,6 +118,7 @@ namespace BinSend
             var RPC = Tools.GetRPC(API);
             var FirstPart = Fragments.FirstOrDefault();
             int Total = Fragments.Count;
+            var AckDataList = new List<string>();
             while (Fragments.Count > 0 && SendMessages)
             {
                 var Fragment = Fragments[0];
@@ -134,6 +138,7 @@ namespace BinSend
                 }
                 if (!string.IsNullOrEmpty(AckData))
                 {
+                    AckDataList.Add(AckData);
                     var Status = BitmessageMessageStatus.notfound;
 
                     bool cont = true;
@@ -164,6 +169,18 @@ namespace BinSend
                     }
                 }
             }
+            //Don't access the Checkbox.Checked property in another thread
+            if (TrashSent)
+            {
+                int count = 0;
+                foreach (var A in AckDataList)
+                {
+                    ++count;
+                    SetProgress($"Deleting {count} of {AckDataList.Count}", count, AckDataList.Count);
+                    RPC.trashSentMessageByAckData(A);
+                }
+            }
+
             SetProgress("Operation " + (SendMessages ? "completed" : "cancelled"), 100, 100);
             Invoke((MethodInvoker)delegate { btnCancel.Text = "&Close"; });
             Sender = null;
@@ -222,6 +239,11 @@ namespace BinSend
                     SendMessages = false;
                 }
             }
+        }
+
+        private void cbClearSent_CheckedChanged(object sender, EventArgs e)
+        {
+            TrashSent = cbClearSent.Checked;
         }
     }
 }
