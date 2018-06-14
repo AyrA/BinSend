@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddrBook));
             this.lvAddresses = new System.Windows.Forms.ListView();
             this.chLabel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chAddress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -137,6 +138,7 @@
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lvAddresses);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAddrBook";
             this.Text = "Address Book";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAddrBook_FormClosed);

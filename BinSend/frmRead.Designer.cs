@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRead));
             this.lbFiles = new System.Windows.Forms.ListBox();
             this.lvFragments = new System.Windows.Forms.ListView();
             this.chPart = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -145,6 +146,7 @@
             this.Controls.Add(this.btnAssemble);
             this.Controls.Add(this.lvFragments);
             this.Controls.Add(this.lbFiles);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmRead";
             this.Text = "Read Files";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRead_FormClosing);

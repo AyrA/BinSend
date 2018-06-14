@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddr));
             this.gbDel = new System.Windows.Forms.GroupBox();
+            this.lbAddr = new System.Windows.Forms.ListBox();
             this.btnDel = new System.Windows.Forms.Button();
             this.gbGen = new System.Windows.Forms.GroupBox();
             this.cbDML = new System.Windows.Forms.CheckBox();
@@ -40,7 +42,6 @@
             this.cbRandom = new System.Windows.Forms.RadioButton();
             this.btnGenerate = new System.Windows.Forms.Button();
             this.cbShortAddr = new System.Windows.Forms.CheckBox();
-            this.lbAddr = new System.Windows.Forms.ListBox();
             this.gbDel.SuspendLayout();
             this.gbGen.SuspendLayout();
             this.SuspendLayout();
@@ -58,6 +59,19 @@
             this.gbDel.TabIndex = 1;
             this.gbDel.TabStop = false;
             this.gbDel.Text = "Delete Addresses";
+            // 
+            // lbAddr
+            // 
+            this.lbAddr.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbAddr.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbAddr.ItemHeight = 16;
+            this.lbAddr.Location = new System.Drawing.Point(12, 22);
+            this.lbAddr.Name = "lbAddr";
+            this.lbAddr.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbAddr.Size = new System.Drawing.Size(501, 244);
+            this.lbAddr.TabIndex = 2;
             // 
             // btnDel
             // 
@@ -184,19 +198,6 @@
             this.cbShortAddr.UseVisualStyleBackColor = true;
             this.cbShortAddr.CheckedChanged += new System.EventHandler(this.cbShortAddr_CheckedChanged);
             // 
-            // lbAddr
-            // 
-            this.lbAddr.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbAddr.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbAddr.ItemHeight = 16;
-            this.lbAddr.Location = new System.Drawing.Point(12, 22);
-            this.lbAddr.Name = "lbAddr";
-            this.lbAddr.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbAddr.Size = new System.Drawing.Size(501, 244);
-            this.lbAddr.TabIndex = 2;
-            // 
             // frmAddr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -204,6 +205,7 @@
             this.ClientSize = new System.Drawing.Size(624, 442);
             this.Controls.Add(this.gbGen);
             this.Controls.Add(this.gbDel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(500, 270);
             this.Name = "frmAddr";
             this.Text = "Manage Addresses";

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSend));
             this.pbStatus = new System.Windows.Forms.ProgressBar();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
@@ -100,6 +101,7 @@
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.pbStatus);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(400, 130);
             this.Name = "frmSend";

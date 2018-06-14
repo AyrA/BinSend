@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTemplate));
             this.lbTemplate = new System.Windows.Forms.ListBox();
             this.tbBody = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
@@ -172,6 +173,7 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.tbBody);
             this.Controls.Add(this.lbTemplate);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "frmTemplate";
             this.Text = "Templates";
