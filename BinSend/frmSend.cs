@@ -51,7 +51,7 @@ namespace BinSend
                 this.From = Tools.GetBmAddr(From);
             }
 
-            //PRevent height from changing but allows resizing
+            //Prevent height from changing but allows resizing
             MaximumSize = new Size(int.MaxValue, MinimumSize.Height);
 
             InitializeComponent();
