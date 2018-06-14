@@ -52,10 +52,10 @@ namespace BinSend
                 this.From = Tools.GetBmAddr(From);
             }
 
+            InitializeComponent();
+
             //Prevent height from changing but allows resizing
             MaximumSize = new Size(int.MaxValue, MinimumSize.Height);
-
-            InitializeComponent();
 
             TrashSent = cbClearSent.Checked;
 
@@ -109,7 +109,7 @@ namespace BinSend
         private static string GetTotal(TimeSpan Elapsed, int CurrentElement, int TotalElements)
         {
             var TotalTime = Elapsed.TotalSeconds / CurrentElement + TotalElements;
-            return TimeSpan.FromSeconds(TotalTime).ToString("HH:mm:ss");
+            return TimeSpan.FromSeconds(Math.Floor(TotalTime)).ToString("c");
         }
 
         private void SendFragments()
@@ -122,8 +122,9 @@ namespace BinSend
             while (Fragments.Count > 0 && SendMessages)
             {
                 var Fragment = Fragments[0];
-                var Elapsed = DateTime.UtcNow.Subtract(StartTime);
-                SetProgress($"Sending Part {Fragment.Part}. Elapsed: {Elapsed.ToString("HH:mm:ss")}. Total: {GetTotal(Elapsed, Fragment.Part, Total)}", Total - Fragments.Count, Total);
+                //Cur off milliseconds
+                var Elapsed = TimeSpan.FromSeconds(Math.Floor(DateTime.UtcNow.Subtract(StartTime).TotalSeconds));
+                SetProgress($"Sending Part {Fragment.Part}. Elapsed: {Elapsed.ToString("c")}. Total: {GetTotal(Elapsed, Fragment.Part, Total)}", Total - Fragments.Count, Total);
                 var Addr = string.IsNullOrEmpty(From) ? RPC.createRandomAddress($"Fragment [{FirstPart.Name}:{Fragment.Part}]".UTF().B64()) : From;
                 Fragments.RemoveAt(0);
                 var Body = Tools.ProcessFragmentBody(BodyTemplate, Fragment, FirstPart.Name, Fragment.Part, Total, FirstPart.List).UTF().B64();
@@ -182,7 +183,11 @@ namespace BinSend
             }
 
             SetProgress("Operation " + (SendMessages ? "completed" : "cancelled"), 100, 100);
-            Invoke((MethodInvoker)delegate { btnCancel.Text = "&Close"; });
+            Invoke((MethodInvoker)delegate
+            {
+                cbClearSent.Enabled = false;
+                btnCancel.Text = "&Close";
+            });
             Sender = null;
         }
 
