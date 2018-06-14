@@ -49,6 +49,25 @@ namespace BinSend
             var IdList = RPC.getAllInboxMessageIds().FromJson<BitmessageIdList>();
             if (IdList.inboxMessageIds != null)
             {
+                Messages = new BitmessageMsg[IdList.inboxMessageIds.Length];
+                for (var i = 0; i < Messages.Length; i++)
+                {
+                    var msg = IdList.inboxMessageIds[i];
+                    SetStatus($"Reading Message {i + 1} of {Messages.Length}");
+                    if (Program.MessageCache.Any(m => m.msgid == msg.msgid))
+                    {
+                        Messages[i] = Program.MessageCache.First(m => m.msgid == msg.msgid);
+                    }
+                    else
+                    {
+                        var container = RPC.getInboxMessageById(msg.msgid, true)
+                            .FromJson<BitmessageInboxMsg>();
+                        if (container.inboxMessage != null && container.inboxMessage.Length > 0)
+                        {
+                            Messages[i] = container.inboxMessage[0].Decode();
+                        }
+                    }
+                }
                 Messages = IdList
                     .inboxMessageIds
                     .Select(m =>
@@ -58,7 +77,7 @@ namespace BinSend
                     .ToArray();
             }
 
-
+            SetStatus("Caching messages...");
 
             //Add messages to cache
             foreach (var Msg in Messages)
@@ -93,12 +112,24 @@ namespace BinSend
                         lbFiles.Items.Add(F);
                     }
                 }
-                //MessageBox.Show($"Got {Messages.Length} messages and extracted {Fragments.Length} unique fragments");
                 if (lbFiles.Items.Count > 0)
                 {
                     lbFiles.SelectedIndex = 0;
                 }
             });
+            SetStatus("Done");
+        }
+
+        private void SetStatus(string Status)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)delegate { SetStatus(Status); });
+            }
+            else
+            {
+                lblStatus.Text = Status;
+            }
         }
 
         private void lbFiles_SelectedIndexChanged(object sender, EventArgs e)
@@ -155,10 +186,26 @@ namespace BinSend
             {
                 if (MessageBox.Show($"Are you sure you want to delete '{F}' from bitmessage?", "Deleting Messages", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    Origin.Delete(Tools.GetRPC(API));
-                    lvFragments.Items.Clear();
-                    lbFiles.Items.Remove(F);
-                    MessageBox.Show($"Fragments deleted.", "Deleting Fragments", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    EnableAll(false);
+                    var T = new Thread(delegate ()
+                    {
+                        var RPC = Tools.GetRPC(API);
+                        int count = 0;
+                        foreach (var id in Origin.MessageIDs)
+                        {
+                            RPC.trashMessage(id);
+                            SetStatus($"Deleted message {++count}");
+                        }
+                        Invoke((MethodInvoker)delegate
+                        {
+                            lvFragments.Items.Clear();
+                            lbFiles.Items.Remove(F);
+                            EnableAll(true);
+                            MessageBox.Show($"Fragments deleted.", "Deleting Fragments", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        });
+                    });
+                    T.IsBackground = true;
+                    T.Start();
                 }
             }
             else

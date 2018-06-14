@@ -38,7 +38,7 @@
             // 
             this.pbStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbStatus.Location = new System.Drawing.Point(12, 27);
+            this.pbStatus.Location = new System.Drawing.Point(12, 47);
             this.pbStatus.Name = "pbStatus";
             this.pbStatus.Size = new System.Drawing.Size(198, 23);
             this.pbStatus.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -47,7 +47,7 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(297, 27);
+            this.btnCancel.Location = new System.Drawing.Point(297, 47);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -59,7 +59,7 @@
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(12, 11);
+            this.lblStatus.Location = new System.Drawing.Point(12, 31);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(84, 13);
             this.lblStatus.TabIndex = 0;
@@ -68,7 +68,7 @@
             // btnSend
             // 
             this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSend.Location = new System.Drawing.Point(216, 27);
+            this.btnSend.Location = new System.Drawing.Point(216, 47);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 2;
@@ -80,17 +80,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 62);
+            this.ClientSize = new System.Drawing.Size(384, 82);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.pbStatus);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(400, 100);
+            this.MinimumSize = new System.Drawing.Size(400, 120);
             this.Name = "frmSend";
             this.Text = "Sending File";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSend_FormClosing);
-            this.ResizeEnd += new System.EventHandler(this.frmSend_ResizeEnd);
             this.ResumeLayout(false);
             this.PerformLayout();
 

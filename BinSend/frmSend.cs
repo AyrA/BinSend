@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -50,6 +51,9 @@ namespace BinSend
                 this.From = Tools.GetBmAddr(From);
             }
 
+            //PRevent height from changing but allows resizing
+            MaximumSize = new Size(int.MaxValue, MinimumSize.Height);
+
             InitializeComponent();
 
             lblStatus.Text = "Processing Fragments...";
@@ -99,15 +103,23 @@ namespace BinSend
             Invoke((MethodInvoker)FragmentsReady);
         }
 
+        private static string GetTotal(TimeSpan Elapsed, int CurrentElement, int TotalElements)
+        {
+            var TotalTime = Elapsed.TotalSeconds / CurrentElement + TotalElements;
+            return TimeSpan.FromSeconds(TotalTime).ToString("HH:mm:ss");
+        }
+
         private void SendFragments()
         {
+            var StartTime = DateTime.UtcNow;
             var RPC = Tools.GetRPC(API);
             var FirstPart = Fragments.FirstOrDefault();
             int Total = Fragments.Count;
             while (Fragments.Count > 0 && SendMessages)
             {
                 var Fragment = Fragments[0];
-                SetProgress($"Sending Part {Fragment.Part}", Total - Fragments.Count, Total);
+                var Elapsed = DateTime.UtcNow.Subtract(StartTime);
+                SetProgress($"Sending Part {Fragment.Part}. Elapsed: {Elapsed.ToString("HH:mm:ss")}. Total: {GetTotal(Elapsed, Fragment.Part, Total)}", Total - Fragments.Count, Total);
                 var Addr = string.IsNullOrEmpty(From) ? RPC.createRandomAddress($"Fragment [{FirstPart.Name}:{Fragment.Part}]".UTF().B64()) : From;
                 Fragments.RemoveAt(0);
                 var Body = Tools.ProcessFragmentBody(BodyTemplate, Fragment, FirstPart.Name, Fragment.Part, Total, FirstPart.List).UTF().B64();
@@ -186,14 +198,6 @@ namespace BinSend
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void frmSend_ResizeEnd(object sender, EventArgs e)
-        {
-            if (Height > 100)
-            {
-                Height = 100;
-            }
         }
 
         private void btnSend_Click(object sender, EventArgs e)

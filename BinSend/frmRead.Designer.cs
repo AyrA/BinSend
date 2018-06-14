@@ -37,6 +37,7 @@
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbFiles
@@ -80,7 +81,7 @@
             this.btnAssemble.Location = new System.Drawing.Point(697, 472);
             this.btnAssemble.Name = "btnAssemble";
             this.btnAssemble.Size = new System.Drawing.Size(75, 23);
-            this.btnAssemble.TabIndex = 4;
+            this.btnAssemble.TabIndex = 6;
             this.btnAssemble.Text = "&Assemble";
             this.btnAssemble.UseVisualStyleBackColor = true;
             this.btnAssemble.Click += new System.EventHandler(this.btnAssemble_Click);
@@ -91,7 +92,7 @@
             this.btnDelete.Location = new System.Drawing.Point(616, 472);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 3;
+            this.btnDelete.TabIndex = 5;
             this.btnDelete.Text = "&Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -106,7 +107,7 @@
             this.btnRefresh.Location = new System.Drawing.Point(535, 472);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
-            this.btnRefresh.TabIndex = 2;
+            this.btnRefresh.TabIndex = 4;
             this.btnRefresh.Text = "&Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
@@ -117,16 +118,27 @@
             this.btnHelp.Location = new System.Drawing.Point(454, 472);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(75, 23);
-            this.btnHelp.TabIndex = 2;
+            this.btnHelp.TabIndex = 3;
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(12, 477);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(37, 13);
+            this.lblStatus.TabIndex = 2;
+            this.lblStatus.Text = "Status";
             // 
             // frmRead
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 502);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnDelete);
@@ -137,6 +149,7 @@
             this.Text = "Read Files";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRead_FormClosing);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -151,5 +164,6 @@
         private System.Windows.Forms.SaveFileDialog SFD;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnHelp;
+        private System.Windows.Forms.Label lblStatus;
     }
 }

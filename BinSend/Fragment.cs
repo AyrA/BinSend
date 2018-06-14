@@ -95,6 +95,14 @@ namespace BinSend
         private List<Fragment> Fragments;
         private List<string> MessageIds;
 
+        public string[] MessageIDs
+        {
+            get
+            {
+                return MessageIds.ToArray();
+            }
+        }
+
         public string FromAddr { get; set; }
 
         public FragmentHandler()
