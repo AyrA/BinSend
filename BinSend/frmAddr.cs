@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace BinSend
 {
@@ -12,30 +14,52 @@ namespace BinSend
             FillAddr();
         }
 
+        private void EnableAll(bool E)
+        {
+            foreach (var C in Controls.OfType<Button>())
+            {
+                C.Enabled = E;
+            }
+        }
+
         private void FillAddr()
         {
-            cbAddr.Items.Clear();
+            lbAddr.Items.Clear();
             var AddrList = Tools.GetRPC(A).listAddresses().FromJson<BitmessageAddrInfoContainer>();
             if (AddrList.addresses != null)
             {
                 foreach (var Addr in AddrList.addresses)
                 {
-                    cbAddr.Items.Add($"{Addr.address} [{Addr.label}]");
+                    lbAddr.Items.Add($"{Addr.address}\t{Addr.label}");
                 }
             }
         }
 
-        private void btnDel_Click(object sender, System.EventArgs e)
+        private void btnDel_Click(object sender, EventArgs e)
         {
-            var Addr = cbAddr.SelectedItem;
-            if (Addr != null)
+            if (lbAddr.SelectedItems.Count > 0)
             {
-                Tools.Log("Delete Address result: " + Tools.GetRPC(A).deleteAddress(Tools.GetBmAddr(Addr.ToString())));
-                FillAddr();
+                if (MessageBox.Show("Delete the selected addresses?", "Delete Addresses", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    EnableAll(false);
+                    var AllItems = lbAddr.SelectedItems.OfType<string>().ToArray();
+                    var AllStatuses = new string[AllItems.Length];
+                    var RPC = Tools.GetRPC(A);
+                    for (var i = 0; i < AllItems.Length; i++)
+                    {
+                        var Addr = Tools.GetBmAddr(AllItems[i]);
+                        AllStatuses[i] = string.Format("{0}: {1}", Addr, RPC.deleteAddress(Addr));
+                        lbAddr.Items.Remove(AllItems[i]);
+                        Application.DoEvents();
+                    }
+                    MessageBox.Show(string.Join(Environment.NewLine, AllStatuses), "Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    EnableAll(true);
+                    FillAddr();
+                }
             }
         }
 
-        private void btnGenerate_Click(object sender, System.EventArgs e)
+        private void btnGenerate_Click(object sender, EventArgs e)
         {
             Enabled = false;
             string Addr = null;
@@ -83,7 +107,7 @@ namespace BinSend
             }
         }
 
-        private void cbShortAddr_CheckedChanged(object sender, System.EventArgs e)
+        private void cbShortAddr_CheckedChanged(object sender, EventArgs e)
         {
             if (cbShortAddr.Checked)
             {
@@ -96,7 +120,7 @@ namespace BinSend
             }
         }
 
-        private void cbRandom_CheckedChanged(object sender, System.EventArgs e)
+        private void cbRandom_CheckedChanged(object sender, EventArgs e)
         {
             if (cbRandom.Checked)
             {

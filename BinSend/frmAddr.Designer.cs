@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cbAddr = new System.Windows.Forms.ComboBox();
             this.gbDel = new System.Windows.Forms.GroupBox();
             this.btnDel = new System.Windows.Forms.Button();
             this.gbGen = new System.Windows.Forms.GroupBox();
@@ -41,30 +40,21 @@
             this.cbRandom = new System.Windows.Forms.RadioButton();
             this.btnGenerate = new System.Windows.Forms.Button();
             this.cbShortAddr = new System.Windows.Forms.CheckBox();
+            this.lbAddr = new System.Windows.Forms.ListBox();
             this.gbDel.SuspendLayout();
             this.gbGen.SuspendLayout();
             this.SuspendLayout();
             // 
-            // cbAddr
-            // 
-            this.cbAddr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbAddr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAddr.FormattingEnabled = true;
-            this.cbAddr.Location = new System.Drawing.Point(6, 23);
-            this.cbAddr.Name = "cbAddr";
-            this.cbAddr.Size = new System.Drawing.Size(367, 21);
-            this.cbAddr.TabIndex = 0;
-            // 
             // gbDel
             // 
-            this.gbDel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.gbDel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbDel.Controls.Add(this.lbAddr);
             this.gbDel.Controls.Add(this.btnDel);
-            this.gbDel.Controls.Add(this.cbAddr);
             this.gbDel.Location = new System.Drawing.Point(12, 158);
             this.gbDel.Name = "gbDel";
-            this.gbDel.Size = new System.Drawing.Size(460, 58);
+            this.gbDel.Size = new System.Drawing.Size(600, 272);
             this.gbDel.TabIndex = 1;
             this.gbDel.TabStop = false;
             this.gbDel.Text = "Delete an Address";
@@ -72,7 +62,7 @@
             // btnDel
             // 
             this.btnDel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDel.Location = new System.Drawing.Point(379, 22);
+            this.btnDel.Location = new System.Drawing.Point(519, 22);
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(75, 23);
             this.btnDel.TabIndex = 1;
@@ -95,7 +85,7 @@
             this.gbGen.Controls.Add(this.cbShortAddr);
             this.gbGen.Location = new System.Drawing.Point(12, 12);
             this.gbGen.Name = "gbGen";
-            this.gbGen.Size = new System.Drawing.Size(460, 130);
+            this.gbGen.Size = new System.Drawing.Size(600, 130);
             this.gbGen.TabIndex = 0;
             this.gbGen.TabStop = false;
             this.gbGen.Text = "Create an Address";
@@ -105,7 +95,7 @@
             this.cbDML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbDML.AutoSize = true;
             this.cbDML.Enabled = false;
-            this.cbDML.Location = new System.Drawing.Point(405, 47);
+            this.cbDML.Location = new System.Drawing.Point(545, 47);
             this.cbDML.Name = "cbDML";
             this.cbDML.Size = new System.Drawing.Size(49, 17);
             this.cbDML.TabIndex = 6;
@@ -136,7 +126,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbLabel.Location = new System.Drawing.Point(211, 19);
             this.tbLabel.Name = "tbLabel";
-            this.tbLabel.Size = new System.Drawing.Size(243, 20);
+            this.tbLabel.Size = new System.Drawing.Size(383, 20);
             this.tbLabel.TabIndex = 2;
             // 
             // tbPassword
@@ -146,7 +136,7 @@
             this.tbPassword.Enabled = false;
             this.tbPassword.Location = new System.Drawing.Point(211, 45);
             this.tbPassword.Name = "tbPassword";
-            this.tbPassword.Size = new System.Drawing.Size(188, 20);
+            this.tbPassword.Size = new System.Drawing.Size(328, 20);
             this.tbPassword.TabIndex = 5;
             // 
             // cbDeterministic
@@ -175,7 +165,7 @@
             // btnGenerate
             // 
             this.btnGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGenerate.Location = new System.Drawing.Point(379, 101);
+            this.btnGenerate.Location = new System.Drawing.Point(519, 101);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(75, 23);
             this.btnGenerate.TabIndex = 8;
@@ -194,11 +184,24 @@
             this.cbShortAddr.UseVisualStyleBackColor = true;
             this.cbShortAddr.CheckedChanged += new System.EventHandler(this.cbShortAddr_CheckedChanged);
             // 
+            // lbAddr
+            // 
+            this.lbAddr.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbAddr.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbAddr.ItemHeight = 16;
+            this.lbAddr.Location = new System.Drawing.Point(12, 22);
+            this.lbAddr.Name = "lbAddr";
+            this.lbAddr.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbAddr.Size = new System.Drawing.Size(501, 244);
+            this.lbAddr.TabIndex = 2;
+            // 
             // frmAddr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 232);
+            this.ClientSize = new System.Drawing.Size(624, 442);
             this.Controls.Add(this.gbGen);
             this.Controls.Add(this.gbDel);
             this.MinimumSize = new System.Drawing.Size(500, 270);
@@ -212,8 +215,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox cbAddr;
         private System.Windows.Forms.GroupBox gbDel;
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.GroupBox gbGen;
@@ -226,5 +227,6 @@
         private System.Windows.Forms.CheckBox cbShortAddr;
         private System.Windows.Forms.CheckBox cbDML;
         private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.ListBox lbAddr;
     }
 }
