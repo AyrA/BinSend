@@ -58,3 +58,8 @@ You can either enter or paste the path manually or use the button next to the fi
 Send
 ====
 This will create parts and send your message.
+
+
+More
+====
+Provides additional features not related to crafting messages
