@@ -57,7 +57,7 @@
             this.gbDel.Size = new System.Drawing.Size(600, 272);
             this.gbDel.TabIndex = 1;
             this.gbDel.TabStop = false;
-            this.gbDel.Text = "Delete an Address";
+            this.gbDel.Text = "Delete Addresses";
             // 
             // btnDel
             // 

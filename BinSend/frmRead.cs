@@ -153,7 +153,7 @@ namespace BinSend
             var Origin = Fragments.FirstOrDefault(m => m.GetPrimary().Contains(F));
             if (Origin != null)
             {
-                if (MessageBox.Show($"Are you sure you want to delete '{F}' from birmessage", "Deleting Messages", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show($"Are you sure you want to delete '{F}' from bitmessage?", "Deleting Messages", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Origin.Delete(Tools.GetRPC(API));
                     lvFragments.Items.Clear();
