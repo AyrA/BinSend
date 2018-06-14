@@ -118,27 +118,81 @@ namespace BinSend
         }
     }
 
+    public class FragmentInfo : ICloneable
+    {
+        public Fragment Fragment;
+        public string MessageId;
+
+        public FragmentInfo() : this(null, null)
+        {
+        }
+
+        public FragmentInfo(Fragment F, string Id)
+        {
+            Fragment = F == null ? null : (Fragment)F.Clone();
+            MessageId = Id;
+        }
+
+        public object Clone()
+        {
+            return new FragmentInfo()
+            {
+                Fragment = (Fragment)Fragment.Clone(),
+                MessageId = MessageId
+            };
+        }
+
+        public override int GetHashCode()
+        {
+            var Code = 0;
+            if (Fragment == null && MessageId == null)
+            {
+                Code = base.GetHashCode();
+            }
+            else
+            {
+                if (Fragment != null)
+                {
+                    Code ^= Fragment.GetHashCode();
+                }
+                if (MessageId != null)
+                {
+                    Code ^= MessageId.GetHashCode();
+                }
+            }
+            return Code;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj != null &&
+                (obj is FragmentInfo) &&
+                GetHashCode() == obj.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            if (Fragment == null || string.IsNullOrEmpty(Fragment.Name) || Fragment.List == null)
+            {
+                return base.ToString();
+            }
+            return $"{Fragment.Name} ({Fragment.List.Length} Parts)";
+        }
+    }
+
     public class FragmentHandler
     {
-        private List<Fragment> Fragments;
-        private List<string> MessageIds;
+        private List<FragmentInfo> Fragments;
 
-        public Fragment[] All
+        public FragmentInfo[] All
         {
             get
             {
                 return Fragments
                     .Select(m => m.Clone())
-                    .OfType<Fragment>()
+                    .OfType<FragmentInfo>()
                     .ToArray();
-            }
-        }
-
-        public string[] MessageIDs
-        {
-            get
-            {
-                return MessageIds.ToArray();
             }
         }
 
@@ -146,32 +200,35 @@ namespace BinSend
 
         public FragmentHandler()
         {
-            Fragments = new List<Fragment>();
-            MessageIds = new List<string>();
+            Fragments = new List<FragmentInfo>();
         }
 
         public FragmentHandler(Fragment[] F, string[] Ids)
         {
-            Fragments = new List<Fragment>(F);
-            MessageIds = new List<string>(MessageIds);
+            Fragments = new List<FragmentInfo>();
+            if (F != null && Ids != null && F.Length == Ids.Length)
+            {
+                for (var i = 0; i < F.Length; i++)
+                {
+                    Fragments.Add(new FragmentInfo(F[i], Ids[i]));
+                }
+            }
         }
 
-        public Fragment Add(Fragment F, string MessageId)
+        public FragmentInfo Add(Fragment F, string MessageId)
         {
-            if (F != null && !Fragments.Contains(F))
+            FragmentInfo FI = null;
+            if (F != null && !Fragments.Any(m => m.Fragment.Equals(F)))
             {
-                Fragments.Add(F);
+                Fragments.Add(FI = new FragmentInfo(F, MessageId));
+                FI = (FragmentInfo)FI.Clone();
             }
-            if (MessageId != null && !MessageIds.Contains(MessageId))
-            {
-                MessageIds.Add(MessageId);
-            }
-            return F;
+            return FI;
         }
 
         public void Delete(BitmessageRPC RPC)
         {
-            foreach (var Id in MessageIds)
+            foreach (var Id in Fragments.Select(m => m.MessageId))
             {
                 try
                 {
@@ -188,10 +245,10 @@ namespace BinSend
         /// Gets a list of all unique first parts
         /// </summary>
         /// <returns></returns>
-        public Fragment[] GetPrimary()
+        public FragmentInfo[] GetPrimary()
         {
             return Fragments
-                .Where(m => m.Part == 1)
+                .Where(m => m.Fragment.Part == 1)
                 .Distinct()
                 .ToArray();
         }
@@ -201,14 +258,14 @@ namespace BinSend
         /// </summary>
         /// <param name="FirstPart">First Part. Part number must be set to 1 and it needs a hash list</param>
         /// <returns>Ordered list. Gaps filled with "null"</returns>
-        public Fragment[] GetOrdered(Fragment FirstPart)
+        public FragmentInfo[] GetOrdered(Fragment FirstPart)
         {
             if (FirstPart == null || FirstPart.List == null || FirstPart.Part != 1)
             {
                 return null;
             }
             return FirstPart.List
-                .Select(m => Fragments.FirstOrDefault(n => n.Validate(m)))
+                .Select(m => Fragments.FirstOrDefault(n => n.Fragment.Validate(m)))
                 .ToArray();
         }
 
@@ -218,7 +275,7 @@ namespace BinSend
         /// <param name="FirstPart">First Part. Part number must be set to 1, it needs a hash list and SameOrigin needs to be false</param>
         /// <param name="AllHandlers">List of all handlers to search parts for</param>
         /// <returns>Ordered list. Gaps filled with "null"</returns>
-        public Fragment[] GetOrderedNoOrigin(Fragment FirstPart, FragmentHandler[] AllHandlers)
+        public FragmentInfo[] GetOrderedNoOrigin(Fragment FirstPart, FragmentHandler[] AllHandlers)
         {
             if (FirstPart == null || FirstPart.List == null || FirstPart.Part != 1 || FirstPart.SameOrigin)
             {
@@ -226,8 +283,22 @@ namespace BinSend
             }
             var GlobalPartList = AllHandlers.SelectMany(m => m.Fragments).Distinct().ToArray();
             return FirstPart.List
-                .Select(m => GlobalPartList.FirstOrDefault(n => n.Validate(m)))
+                .Select(m => GlobalPartList.FirstOrDefault(n => n.Fragment.Validate(m)))
                 .ToArray();
+        }
+
+        /// <summary>
+        /// Joins all available fragments together in the order supplied
+        /// </summary>
+        /// <param name="Fragments">Fragment list</param>
+        /// <returns>Combined data</returns>
+        public byte[] Join(IEnumerable<FragmentInfo> Fragments)
+        {
+            if (Fragments != null)
+            {
+                return Join(Fragments.Select(m => m.Fragment));
+            }
+            return null;
         }
 
         /// <summary>
@@ -237,10 +308,14 @@ namespace BinSend
         /// <returns>Combined data</returns>
         public byte[] Join(IEnumerable<Fragment> Fragments)
         {
-            return Fragments
-                .Where(m => m != null)
-                .SelectMany(m => m.Decode())
-                .ToArray();
+            if (Fragments != null)
+            {
+                return Fragments
+                    .Where(m => m != null)
+                    .SelectMany(m => m.Decode())
+                    .ToArray();
+            }
+            return null;
         }
     }
 }

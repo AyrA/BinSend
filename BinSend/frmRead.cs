@@ -71,20 +71,12 @@ namespace BinSend
                         }
                     }
                 }
-                Messages = IdList
-                    .inboxMessageIds
-                    .Select(m =>
-                        Program.MessageCache.Any(n => n.msgid == m.msgid) ?
-                        Program.MessageCache.First(n => n.msgid == m.msgid) :
-                        RPC.getInboxMessageById(m.msgid, true).FromJson<BitmessageInboxMsg>().inboxMessage.FirstOrDefault().Decode())
-                    .ToArray();
             }
 
             //Add messages to cache
             int index = 0;
             foreach (var Msg in Messages)
             {
-
                 SetStatus($"Caching message {++index}...");
                 if (!Program.MessageCache.Any(m => m.msgid == Msg.msgid))
                 {
@@ -141,7 +133,7 @@ namespace BinSend
         {
             if (lbFiles.SelectedIndex >= 0)
             {
-                var F = (Fragment)lbFiles.SelectedItem;
+                var F = (FragmentInfo)lbFiles.SelectedItem;
                 var Origin = Fragments.FirstOrDefault(m => m.GetPrimary().Contains(F));
                 if (Origin != null)
                 {
@@ -154,26 +146,26 @@ namespace BinSend
             }
         }
 
-        private Fragment[] GetFragments(Fragment F, FragmentHandler Origin)
+        private FragmentInfo[] GetFragments(FragmentInfo F, FragmentHandler Origin)
         {
-            if (F.SameOrigin)
+            if (F.Fragment.SameOrigin)
             {
-                return Origin.GetOrdered(F);
+                return Origin.GetOrdered(F.Fragment);
             }
             else
             {
-                return Origin.GetOrderedNoOrigin(F, Fragments);
+                return Origin.GetOrderedNoOrigin(F.Fragment, Fragments);
             }
         }
 
-        private void SetFragmentList(IEnumerable<Fragment> Fragments)
+        private void SetFragmentList(IEnumerable<FragmentInfo> Fragments)
         {
             lvFragments.Items.Clear();
             foreach (var F in Fragments)
             {
                 if (F != null)
                 {
-                    lvFragments.Items.Add($"Part {F.Part}").SubItems.Add(F.Content.UTF().SHA1());
+                    lvFragments.Items.Add($"Part {F.Fragment.Part}").SubItems.Add(F.Fragment.Content.UTF().SHA1());
                 }
                 else
                 {
@@ -185,36 +177,37 @@ namespace BinSend
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var F = (Fragment)lbFiles.SelectedItem;
+            var F = (FragmentInfo)lbFiles.SelectedItem;
             var Origin = Fragments.FirstOrDefault(m => m.GetPrimary().Contains(F));
             if (Origin != null)
             {
-                var AllIds = Origin.MessageIDs;
-                var AllFragments = Origin.All;
-                var txt = $"Are you sure you want to delete '{F}' from bitmessage? (total messages: {AllIds.Length})";
-                if (AllIds.Length != AllFragments.Length)
+                FragmentInfo[] AllFragments;
+                if (F.Fragment.SameOrigin)
                 {
-                    Text += "\r\n\r\nThe number of message ids associated with this file mismatches the number of fragments.\r\n";
-                    if (AllIds.Length > AllFragments.Length)
-                    {
-                        Text += "There are more message IDs than fragments. It's likely that you have multiple messages with the same fragment in them.";
-                    }
-                    else
-                    {
-                        Text += "There are less message IDs than fragments. It's likely that some other process is interfacing with bitmessage.";
-                    }
+                    AllFragments = Origin.GetOrdered(F.Fragment);
                 }
-                if (MessageBox.Show(txt, "Deleting Messages", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                else
+                {
+                    AllFragments = Origin.GetOrderedNoOrigin(F.Fragment, Fragments);
+                }
+                if (MessageBox.Show($"Are you sure you want to delete '{F.Fragment.Name}' from bitmessage? (total {AllFragments.Length} fragments)", "Deleting Messages", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     EnableAll(false);
                     var T = new Thread(delegate ()
                     {
                         var RPC = Tools.GetRPC(API);
                         int count = 0;
-                        foreach (var id in Origin.MessageIDs)
+                        foreach (var Frag in AllFragments)
                         {
-                            RPC.trashMessage(id);
-                            SetStatus($"Deleted message {++count}");
+                            if (Frag != null)
+                            {
+                                RPC.trashMessage(Frag.MessageId);
+                                SetStatus($"Deleted message {++count}");
+                            }
+                            else
+                            {
+                                SetStatus($"Skipping empty fragment {++count}");
+                            }
                         }
                         Invoke((MethodInvoker)delegate
                         {
@@ -236,7 +229,7 @@ namespace BinSend
 
         private void btnAssemble_Click(object sender, EventArgs e)
         {
-            var F = (Fragment)lbFiles.SelectedItem;
+            var F = (FragmentInfo)lbFiles.SelectedItem;
             var Origin = Fragments.FirstOrDefault(m => m.GetPrimary().Contains(F));
             if (Origin != null)
             {
@@ -248,8 +241,8 @@ namespace BinSend
                         return;
                     }
                 }
-                SFD.FileName = F.Name;
-                SFD.Filter = $"{F.Name}|{F.Name}|Same Type|*{Path.GetExtension(F.Name)}";
+                SFD.FileName = F.Fragment.Name;
+                SFD.Filter = $"{F.Fragment.Name}|{F.Fragment.Name}|Same Type|*{Path.GetExtension(F.Fragment.Name)}";
                 if (SFD.ShowDialog() == DialogResult.OK)
                 {
                     try
