@@ -108,7 +108,7 @@ namespace BinSend
 
         private static string GetTotal(TimeSpan Elapsed, int CurrentElement, int TotalElements)
         {
-            var TotalTime = Elapsed.TotalSeconds / CurrentElement + TotalElements;
+            var TotalTime = Elapsed.TotalSeconds / CurrentElement * TotalElements;
             return TimeSpan.FromSeconds(Math.Floor(TotalTime)).ToString("c");
         }
 
@@ -122,9 +122,6 @@ namespace BinSend
             while (Fragments.Count > 0 && SendMessages)
             {
                 var Fragment = Fragments[0];
-                //Cur off milliseconds
-                var Elapsed = TimeSpan.FromSeconds(Math.Floor(DateTime.UtcNow.Subtract(StartTime).TotalSeconds));
-                SetProgress($"Sending Part {Fragment.Part}. Elapsed: {Elapsed.ToString("c")}. Total: {GetTotal(Elapsed, Fragment.Part, Total)}", Total - Fragments.Count, Total);
                 var Addr = string.IsNullOrEmpty(From) ? RPC.createRandomAddress($"Fragment [{FirstPart.Name}:{Fragment.Part}]".UTF().B64()) : From;
                 Fragments.RemoveAt(0);
                 var Body = Tools.ProcessFragmentBody(BodyTemplate, Fragment, FirstPart.Name, Fragment.Part, Total, FirstPart.List).UTF().B64();
@@ -145,6 +142,9 @@ namespace BinSend
                     bool cont = true;
                     while (cont)
                     {
+                        //Cut off milliseconds
+                        var Elapsed = TimeSpan.FromSeconds(Math.Floor(DateTime.UtcNow.Subtract(StartTime).TotalSeconds));
+                        SetProgress($"Sending Part {Fragment.Part}. Elapsed: {Elapsed.ToString("c")}. Total: {GetTotal(Elapsed, Fragment.Part, Total)}", Total - Fragments.Count, Total);
                         if (Enum.TryParse(RPC.getStatus(AckData), out Status))
                         {
                             switch (Status)
