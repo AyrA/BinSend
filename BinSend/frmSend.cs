@@ -170,12 +170,13 @@ namespace BinSend
                     }
                 }
             }
-            //Don't access the Checkbox.Checked property in another thread
+            //Don't access the Checkbox.Checked property directly from another thread
             if (TrashSent)
             {
                 int count = 0;
                 foreach (var A in AckDataList)
                 {
+                    //Note: deleting the message that is currently doing POW is safe
                     ++count;
                     SetProgress($"Deleting {count} of {AckDataList.Count}", count, AckDataList.Count);
                     RPC.trashSentMessageByAckData(A);

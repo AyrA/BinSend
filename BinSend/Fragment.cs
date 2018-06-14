@@ -67,7 +67,23 @@ namespace BinSend
 
         public override int GetHashCode()
         {
-            return this.ToJson().GetHashCode();
+            var code = SameOrigin.GetHashCode() ^ Part.GetHashCode();
+            if (List != null)
+            {
+                foreach (var S in List)
+                {
+                    code ^= S.GetHashCode();
+                }
+            }
+            if (Name != null)
+            {
+                code ^= Name.GetHashCode();
+            }
+            if (Content != null)
+            {
+                code ^= Content.GetHashCode();
+            }
+            return code;
         }
 
         public override bool Equals(object obj)
@@ -77,7 +93,7 @@ namespace BinSend
                 return false;
             }
             var F = obj as Fragment;
-            return this.ToJson() == F.ToJson();
+            return GetHashCode() == F.GetHashCode();
         }
 
         public override string ToString()
@@ -138,7 +154,7 @@ namespace BinSend
                 {
                     RPC.trashMessage(Id);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Tools.Log($"Unable to delete fragment. Reason: {ex.Message}");
                 }

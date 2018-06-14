@@ -36,7 +36,10 @@ namespace BinSend
         {
             foreach (var C in Controls)
             {
-                ((Control)C).Enabled = Status;
+                if (!(C is Label))
+                {
+                    ((Control)C).Enabled = Status;
+                }
             }
         }
 
@@ -77,11 +80,12 @@ namespace BinSend
                     .ToArray();
             }
 
-            SetStatus("Caching messages...");
-
             //Add messages to cache
+            int index = 0;
             foreach (var Msg in Messages)
             {
+
+                SetStatus($"Caching message {++index}...");
                 if (!Program.MessageCache.Any(m => m.msgid == Msg.msgid))
                 {
                     Program.MessageCache.Add(Msg);
@@ -102,6 +106,7 @@ namespace BinSend
 
             Fragments = Handlers.ToArray();
 
+            SetStatus("Populating Lists");
             Invoke((MethodInvoker)delegate
             {
                 EnableAll(true);
