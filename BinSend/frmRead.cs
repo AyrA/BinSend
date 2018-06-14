@@ -189,7 +189,22 @@ namespace BinSend
             var Origin = Fragments.FirstOrDefault(m => m.GetPrimary().Contains(F));
             if (Origin != null)
             {
-                if (MessageBox.Show($"Are you sure you want to delete '{F}' from bitmessage?", "Deleting Messages", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                var AllIds = Origin.MessageIDs;
+                var AllFragments = Origin.All;
+                var txt = $"Are you sure you want to delete '{F}' from bitmessage? (total messages: {AllIds.Length})";
+                if (AllIds.Length != AllFragments.Length)
+                {
+                    Text += "\r\n\r\nThe number of message ids associated with this file mismatches the number of fragments.\r\n";
+                    if (AllIds.Length > AllFragments.Length)
+                    {
+                        Text += "There are more message IDs than fragments. It's likely that you have multiple messages with the same fragment in them.";
+                    }
+                    else
+                    {
+                        Text += "There are less message IDs than fragments. It's likely that some other process is interfacing with bitmessage.";
+                    }
+                }
+                if (MessageBox.Show(txt, "Deleting Messages", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     EnableAll(false);
                     var T = new Thread(delegate ()

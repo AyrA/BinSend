@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BinSend
 {
-    public class Fragment
+    public class Fragment : ICloneable
     {
         public string Name;
         public bool SameOrigin;
@@ -104,12 +104,35 @@ namespace BinSend
             }
             return $"{Name} ({List.Length} Parts)";
         }
+
+        public object Clone()
+        {
+            //Basic clone of this instance
+            var Temp = (Fragment)MemberwiseClone();
+            //Deep clone array to lose reference
+            if (Temp.List != null)
+            {
+                Temp.List = (string[])Temp.List.Clone();
+            }
+            return Temp;
+        }
     }
 
     public class FragmentHandler
     {
         private List<Fragment> Fragments;
         private List<string> MessageIds;
+
+        public Fragment[] All
+        {
+            get
+            {
+                return Fragments
+                    .Select(m => m.Clone())
+                    .OfType<Fragment>()
+                    .ToArray();
+            }
+        }
 
         public string[] MessageIDs
         {
