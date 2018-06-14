@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace BinSend
@@ -195,8 +196,19 @@ namespace BinSend
 
         private void emptyTrashToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Tools.GetRPC(C.ApiSettings).deleteAndVacuum();
-            MessageBox.Show("Done. Bitmessage might be unresponsive for a few seconds now.", "Empty trash and compress", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Enabled = false;
+            var T = new Thread(delegate () {
+                var RPC = Tools.GetRPC(C.ApiSettings);
+                RPC.deleteAndVacuum();
+                //Perform a request that blocks due to DB update
+                RPC.getInboxMessageById("00000000");
+                Invoke((MethodInvoker)delegate {
+                    Enabled = true;
+                    MessageBox.Show("Operation completed.", "Empty trash and compress", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                });
+            });
+            T.IsBackground = true;
+            T.Start();
         }
 
         private void shutdownBitmessageToolStripMenuItem_Click(object sender, EventArgs e)
