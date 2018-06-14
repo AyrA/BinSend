@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.label1 = new System.Windows.Forms.Label();
             this.cbFromAddr = new System.Windows.Forms.ComboBox();
@@ -53,8 +54,14 @@
             this.cbToAddr = new System.Windows.Forms.ComboBox();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnRead = new System.Windows.Forms.Button();
+            this.btnMore = new System.Windows.Forms.Button();
+            this.CMS = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.emptyTrashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shutdownBitmessageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aPISettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.nudChunk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTTL)).BeginInit();
+            this.CMS.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -130,7 +137,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(58, 375);
+            this.label5.Location = new System.Drawing.Point(58, 377);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(82, 13);
             this.label5.TabIndex = 11;
@@ -139,14 +146,14 @@
             // nudChunk
             // 
             this.nudChunk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.nudChunk.Location = new System.Drawing.Point(146, 373);
+            this.nudChunk.Location = new System.Drawing.Point(146, 374);
             this.nudChunk.Maximum = new decimal(new int[] {
-            1000,
+            200,
             0,
             0,
             0});
             this.nudChunk.Name = "nudChunk";
-            this.nudChunk.Size = new System.Drawing.Size(69, 20);
+            this.nudChunk.Size = new System.Drawing.Size(51, 20);
             this.nudChunk.TabIndex = 12;
             this.nudChunk.Value = new decimal(new int[] {
             50,
@@ -158,7 +165,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(236, 375);
+            this.label6.Location = new System.Drawing.Point(203, 377);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 13;
@@ -167,7 +174,7 @@
             // nudTTL
             // 
             this.nudTTL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.nudTTL.Location = new System.Drawing.Point(284, 373);
+            this.nudTTL.Location = new System.Drawing.Point(251, 374);
             this.nudTTL.Maximum = new decimal(new int[] {
             672,
             0,
@@ -179,7 +186,7 @@
             0,
             0});
             this.nudTTL.Name = "nudTTL";
-            this.nudTTL.Size = new System.Drawing.Size(69, 20);
+            this.nudTTL.Size = new System.Drawing.Size(50, 20);
             this.nudTTL.TabIndex = 14;
             this.nudTTL.Value = new decimal(new int[] {
             24,
@@ -211,7 +218,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 375);
+            this.label7.Location = new System.Drawing.Point(12, 377);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(43, 13);
             this.label7.TabIndex = 10;
@@ -263,17 +270,18 @@
             this.btnSend.Location = new System.Drawing.Point(525, 427);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(47, 23);
-            this.btnSend.TabIndex = 21;
+            this.btnSend.TabIndex = 22;
             this.btnSend.Text = "&Send";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // btnTemplate
             // 
-            this.btnTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTemplate.Location = new System.Drawing.Point(359, 373);
+            this.btnTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTemplate.Location = new System.Drawing.Point(307, 373);
             this.btnTemplate.Name = "btnTemplate";
-            this.btnTemplate.Size = new System.Drawing.Size(213, 23);
+            this.btnTemplate.Size = new System.Drawing.Size(265, 23);
             this.btnTemplate.TabIndex = 15;
             this.btnTemplate.Text = "&Template";
             this.btnTemplate.UseVisualStyleBackColor = true;
@@ -300,7 +308,7 @@
             this.btnHelp.Location = new System.Drawing.Point(419, 427);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(47, 23);
-            this.btnHelp.TabIndex = 19;
+            this.btnHelp.TabIndex = 20;
             this.btnHelp.Text = "&Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
@@ -311,10 +319,51 @@
             this.btnRead.Location = new System.Drawing.Point(472, 427);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(47, 23);
-            this.btnRead.TabIndex = 20;
+            this.btnRead.TabIndex = 21;
             this.btnRead.Text = "&Read";
             this.btnRead.UseVisualStyleBackColor = true;
             this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
+            // 
+            // btnMore
+            // 
+            this.btnMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnMore.Location = new System.Drawing.Point(61, 427);
+            this.btnMore.Name = "btnMore";
+            this.btnMore.Size = new System.Drawing.Size(47, 23);
+            this.btnMore.TabIndex = 19;
+            this.btnMore.Text = "&More";
+            this.btnMore.UseVisualStyleBackColor = true;
+            this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
+            // 
+            // CMS
+            // 
+            this.CMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.emptyTrashToolStripMenuItem,
+            this.aPISettingsToolStripMenuItem,
+            this.shutdownBitmessageToolStripMenuItem});
+            this.CMS.Name = "CMS";
+            this.CMS.Size = new System.Drawing.Size(192, 70);
+            // 
+            // emptyTrashToolStripMenuItem
+            // 
+            this.emptyTrashToolStripMenuItem.Name = "emptyTrashToolStripMenuItem";
+            this.emptyTrashToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.emptyTrashToolStripMenuItem.Text = "&Empty Trash";
+            this.emptyTrashToolStripMenuItem.Click += new System.EventHandler(this.emptyTrashToolStripMenuItem_Click);
+            // 
+            // shutdownBitmessageToolStripMenuItem
+            // 
+            this.shutdownBitmessageToolStripMenuItem.Name = "shutdownBitmessageToolStripMenuItem";
+            this.shutdownBitmessageToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.shutdownBitmessageToolStripMenuItem.Text = "&Shutdown Bitmessage";
+            this.shutdownBitmessageToolStripMenuItem.Click += new System.EventHandler(this.shutdownBitmessageToolStripMenuItem_Click);
+            // 
+            // aPISettingsToolStripMenuItem
+            // 
+            this.aPISettingsToolStripMenuItem.Name = "aPISettingsToolStripMenuItem";
+            this.aPISettingsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.aPISettingsToolStripMenuItem.Text = "&API Settings";
+            this.aPISettingsToolStripMenuItem.Click += new System.EventHandler(this.aPISettingsToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -324,6 +373,7 @@
             this.Controls.Add(this.cbToAddr);
             this.Controls.Add(this.btnTemplate);
             this.Controls.Add(this.btnRead);
+            this.Controls.Add(this.btnMore);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.tbFile);
@@ -345,11 +395,12 @@
             this.Controls.Add(this.cbFromAddr);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(600, 500);
+            this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "frmMain";
             this.Text = "BinSend";
             ((System.ComponentModel.ISupportInitialize)(this.nudChunk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudTTL)).EndInit();
+            this.CMS.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -381,6 +432,11 @@
         private System.Windows.Forms.ComboBox cbToAddr;
         private System.Windows.Forms.Button btnHelp;
         private System.Windows.Forms.Button btnRead;
+        private System.Windows.Forms.Button btnMore;
+        private System.Windows.Forms.ContextMenuStrip CMS;
+        private System.Windows.Forms.ToolStripMenuItem emptyTrashToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem shutdownBitmessageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aPISettingsToolStripMenuItem;
     }
 }
 

@@ -192,5 +192,38 @@ namespace BinSend
                 F.ShowDialog();
             }
         }
+
+        private void emptyTrashToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tools.GetRPC(C.ApiSettings).deleteAndVacuum();
+            MessageBox.Show("Done. Bitmessage might be unresponsive for a few seconds now.", "Empty trash and compress", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void shutdownBitmessageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Really shut down bitmessage? There is no way for this application to restart it.\r\nThis will also shutdown this application.", "Shutdown", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Tools.GetRPC(C.ApiSettings).shutdown();
+                Close();
+            }
+        }
+
+        private void aPISettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var f = new frmApiConfig(C))
+            {
+                if (f.ShowDialog() == DialogResult.OK)
+                {
+                    C.ApiSettings = f.ApiConfiguration;
+                    C.Save(Program.AppPath);
+                    MessageBox.Show("API Settings saved", "API Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void btnMore_Click(object sender, EventArgs e)
+        {
+            CMS.Show(MousePosition.X, MousePosition.Y);
+        }
     }
 }

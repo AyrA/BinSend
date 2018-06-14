@@ -56,10 +56,11 @@ namespace BinSend
 Make sure that bitmessage is running.
 Message: {ex.Message}
 
-Edit Configuratio now? Selecting ''No'' will exit", "API Error", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.Yes)
+Edit Configuratio now? Selecting ''No'' will exit", "API Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                     {
                         Configure();
                     }
+                    return;
                 }
                 if (!string.IsNullOrEmpty(Status.softwareName))
                 {
