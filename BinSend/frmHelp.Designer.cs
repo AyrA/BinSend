@@ -35,6 +35,7 @@
             // tbHelp
             // 
             this.tbHelp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbHelp.Location = new System.Drawing.Point(0, 0);
             this.tbHelp.Multiline = true;
             this.tbHelp.Name = "tbHelp";
