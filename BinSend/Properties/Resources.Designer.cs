@@ -89,6 +89,27 @@ namespace BinSend.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API Settings
+        ///============
+        ///
+        ///Use this window to set the connection parameters for bitmessage.
+        ///You can do this manually or automatic.
+        ///
+        ///Automatic Configuration
+        ///=======================
+        ///This is recommended if you are inexperienced with INI files or if bitmessage has not yet been set up for the API.
+        ///
+        ///You have to select the keys.dat file you want to read the settings from and make changes to.
+        ///The dialog will check if there is a file in the Bitmessage Application Data folder or the current directory
+        ///and  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string HELP_API {
+            get {
+                return ResourceManager.GetString("HELP_API", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main Window
         ///===========
         ///
@@ -116,7 +137,25 @@ namespace BinSend.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Read Window
+        ///===========
+        ///
+        ///In this window you can assemble parts into files
+        ///
+        ///Detected Contents
+        ///=================
+        ///This application can detect files sent via the Binsend format.
+        ///Check the Help of the Template Window for information obout this format.
+        ///This application has proper SameOrigin support.
+        ///
+        ///File List
+        ///=========
+        ///The leftmost box contains a list of all files found in your inboxes.
+        ///It will only list files where the first part is available.
+        ///
+        ///File Details
+        ///============
+        ///The rightmost box conta [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HELP_Read {
             get {

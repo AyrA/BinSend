@@ -19,6 +19,10 @@ namespace BinSend
         private static extern void OutputDebugStringW([MarshalAs(UnmanagedType.LPWStr)]string Message);
 
         /// <summary>
+        /// Default charset for String generator
+        /// </summary>
+        public const string CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-_";
+        /// <summary>
         /// Placeholder for a single random BM address
         /// </summary>
         public const string BM_SRND = "BM-SRND";
@@ -76,7 +80,7 @@ namespace BinSend
             if (!string.IsNullOrEmpty(MessageBody) && MessageBody.Contains(BINSEND_START))
             {
                 //Find start segment
-                var Start = MessageBody.IndexOf(BINSEND_START)+ BINSEND_START.Length;
+                var Start = MessageBody.IndexOf(BINSEND_START) + BINSEND_START.Length;
                 var End = MessageBody.IndexOf(BINSEND_END, Start);
                 //End is optional
                 if (End < 0)
@@ -449,6 +453,26 @@ namespace BinSend
         {
             return (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).AddSeconds(Timestamp);
 
+        }
+
+        /// <summary>
+        /// Generates a random string
+        /// </summary>
+        /// <param name="Length">Length of string</param>
+        /// <param name="Charset">Charset to use</param>
+        /// <returns>Random string</returns>
+        /// <remarks>This is moderately secure but the algorithm is slightly biased if the charset length is not a power of 2</remarks>
+        public static string RandomString(int Length, string Charset = CHARSET)
+        {
+            using (var RNG = RandomNumberGenerator.Create())
+            {
+
+                var Data = new byte[Length];
+                RNG.GetBytes(Data);
+
+                return new string(Data.Select(m => Charset[m % Charset.Length]).ToArray());
+
+            }
         }
     }
 }

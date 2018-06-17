@@ -1,0 +1,90 @@
+﻿API Settings
+============
+
+Use this window to set the connection parameters for bitmessage.
+You can do this manually or automatic.
+
+General API Information
+=======================
+The bitmessage API is insecure and your password is stored unencrypted by bitmessage.
+Be aware that all your data is transmitted unencrypted between this application and the bitmessage client,
+including all messages and your username/password combination.
+
+If the client runs on a remote computer you need to protect your traffic with a VPN or encrypted proxy server.
+
+If the client runs on your own computer,
+connect only to 127.0.0.1 and don't loop back via a physical network interface.
+
+Automatic Configuration
+=======================
+This is recommended if you are inexperienced with INI files or if bitmessage has not yet been set up for the API.
+
+You have to select the keys.dat file you want to read the settings from and make changes to.
+The dialog will check if there is a file in the Bitmessage Application Data folder or the current directory
+and offer this first but you are free to browse to another file.
+This is especially necessary if you have multiple copies of bitmessage.
+
+The automatic configuration will take all API settings from keys.dat and fills in missing or wrong settings.
+
+Limitations
+-----------
+This method has various limitations you need to be aware of:
+
+One time operation:
+This method is a one time operation. It will not constantly keep your API settings in sync.
+If you change the API settings in keys.dat you need to run it again.
+
+Saving Changes:
+To save changes into keys.dat you need to exit bitmessage or your changes might be lost.
+
+keys.dat Location:
+This application will not check if the keys.dat you select is stored on your local computer or on a network drive.
+If you select the file from another computer the API will store an unusable IP address if none is there already.
+
+IP Address:
+If keys.dat already has an IP address set we try to figure out if that address suggests to connect locally or not.
+Please edit the IP field if necessary after the assistant has completed.
+
+Password:
+The password is stored unencrypted in keys.dat. Don't use something sensitive for the password.
+If no password is set, you will be offered a randomly generated default
+
+Manual Configuration
+====================
+This is recommended if you know your API values.
+This is commonly the case if you used other applications with the bitmessage API in the past.
+Just fill in the values and test them before confirming.
+Below is a description of the fields.
+
+IP or Hostname
+--------------
+Write the IP or hostname in this box.
+If bitmessage runs on your own computer this is likely 127.0.0.1.
+
+If it runs on a remote computer, type the IP of that machine.
+Ensure you have configured the firewall of the remote computer to allow access from your machine.
+
+This box accepts domain names too but we recommend to use IP addresses
+
+Port
+----
+This is the port on which the bitmessage client listens.
+There is no official default for this, but the API documentation uses 8442 in the example
+
+Username
+--------
+This is the username for the API
+The API documentation example value is "username"
+
+Password
+--------
+This is the password for the API
+The API documentation example value is "password"
+
+Please be aware that the password is stored unencrypted in the configuration
+
+Test
+----
+Use this button to test the API settings before saving them.
+If the values are correct, bitmessage will report the version number,
+otherwise you will get an error message.

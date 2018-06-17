@@ -121,6 +121,9 @@
   <data name="HELP_AddrBook" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\addrbook.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="HELP_API" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\api.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="HELP_Main" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\main.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
