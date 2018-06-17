@@ -142,8 +142,8 @@ Works in all major browsers.<br />
         {
             return new Template[]
             {
-                new Template("Default", DEFAULT, EncodingType.Base64),
-                new Template("Default (Short)", DEFAULT_SHORT, EncodingType.Base64),
+                new Template("Default", DEFAULT, EncodingType.Ascii85),
+                new Template("Default (Short)", DEFAULT_SHORT, EncodingType.Ascii85),
                 new Template("Raw", RAW, EncodingType.Raw),
                 new Template("Video (ogg)", VIDEO, EncodingType.Base64),
                 new Template("Audio (mp3)", AUDIO, EncodingType.Base64)
