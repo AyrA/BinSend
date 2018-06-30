@@ -99,6 +99,12 @@ You can reassemble the parts using BinSend: https://github.com/AyrA/BinSend
         /// Raw data. No header or other stuff
         /// </summary>
         public const string RAW = "{6}";
+
+        /// <summary>
+        /// Raw data but with part indicators
+        /// </summary>
+        public const string SEGMENTED = @"{1}/{2}
+{6}";
         /// <summary>
         /// HTML5 video (ogg)
         /// </summary>
@@ -145,6 +151,7 @@ Works in all major browsers.<br />
                 new Template("Default", DEFAULT, EncodingType.Ascii85),
                 new Template("Default (Short)", DEFAULT_SHORT, EncodingType.Ascii85),
                 new Template("Raw", RAW, EncodingType.Raw),
+                new Template("Segmented", SEGMENTED, EncodingType.Raw),
                 new Template("Video (ogg)", VIDEO, EncodingType.Base64),
                 new Template("Audio (mp3)", AUDIO, EncodingType.Base64)
             };
