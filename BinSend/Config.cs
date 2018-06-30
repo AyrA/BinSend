@@ -149,6 +149,29 @@ Works in all major browsers.<br />
                 new Template("Audio (mp3)", AUDIO, EncodingType.Base64)
             };
         }
+
+        public override int GetHashCode()
+        {
+            var Code = Encoding.GetHashCode();
+            if (Name != null)
+            {
+                Code ^= Name.GetHashCode();
+            }
+            if (Content != null)
+            {
+                Code ^= Content.GetHashCode();
+            }
+            return Code;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || obj.GetType() != GetType())
+            {
+                return false;
+            }
+            return obj.GetHashCode() == GetHashCode();
+        }
     }
 
     public struct ApiConfig

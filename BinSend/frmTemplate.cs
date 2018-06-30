@@ -10,11 +10,13 @@ namespace BinSend
     public partial class frmTemplate : Form
     {
         public int SelectedIndex;
+        private int InitialSelected;
         public Template[] Templates;
         private List<Template> WorkingTemplates;
 
         public frmTemplate(Template[] Templates, int Selected)
         {
+            InitialSelected = Selected;
             WorkingTemplates = new List<Template>(this.Templates = Templates);
             InitializeComponent();
             foreach (var E in Enum.GetValues(typeof(EncodingType)))
@@ -138,9 +140,13 @@ namespace BinSend
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            SaveTemplates();
+            MessageBox.Show("Your changes have been saved", "Changes saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void SaveTemplates()
+        {
             Templates = WorkingTemplates.ToArray();
-            DialogResult = DialogResult.OK;
-            Close();
         }
 
         private void cbEncoding_SelectedIndexChanged(object sender, EventArgs e)
@@ -157,7 +163,28 @@ namespace BinSend
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Close();
+            if (Templates.SequenceEqual(WorkingTemplates))
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
+            {
+                switch (MessageBox.Show("There are unsaved changes. Save changes before closing?", "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation))
+                {
+                    case DialogResult.Yes:
+                        SaveTemplates();
+                        DialogResult = DialogResult.OK;
+                        Close();
+                        break;
+                    case DialogResult.No:
+                        SelectedIndex = InitialSelected;
+                        Close();
+                        break;
+                    case DialogResult.Cancel:
+                        break;
+                }
+            }
         }
 
         private void btnHelp_Click(object sender, EventArgs e)
